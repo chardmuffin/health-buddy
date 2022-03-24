@@ -1,5 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- TODO:
+
+        link css framework here
+    
+        <link rel="stylesheet" href="#">
+    -->
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Mental Health Buddy</title>
+</head>
+<body>
+    <nav id="nav-bar">
+        <h3 id="user-name">
+            Name
+        </h3>
+        <button id="menu-button">
+                <!-- 
+                    button press should trigger a function in javascript:
+                    openMenu()
+                -->
+        </button>
+    </nav>
+
+    <header id="jumbotron">
+        <div id="welcome-message-container">
+            <!--
+                TODO
+                use jquery to add icon/image here e.g. <i></i>
+            -->
+        </div>
+        <div id="icon-container">
+            <!--
+                TODO
+                use jquery to add icon/image here e.g. <i></i>
+            -->
+        </div>
+    </header>
+
+    <div id="reminders-card">
+        <div id="reminder-header">
+            <h2>Don't Forget...</h2>
+            <button id="add-reminder-button">
+                <!--
+                    TODO
+                    float right
+                    button press should trigger a function in javascript:
+                    addReminderButtonHandler()
+                -->
+            </button>
+        </div>
+
+        <div id="reminders-container">
+            <!--
+                TODO
+                * use javascript to generate reminders from localstorage
+                * include an h3 for name of reminder,
+                * on/off slider?
+                * edit button?
+                * delete button?
+                
+                nice to have:
+                * frequency
+                * description
+                * send me a quote/meme at random times
+            -->
+        </div>
+    </div>
+  
+    <div id="task-card">
+        <div id="task-header">
+            <h2>Tasks...</h2>
+            <button id="add-task-button">
+                <!--
+                    TODO
+                    float right
+                    button press should trigger a function in javascript:
+                    addTaskButtonHandler()
+                -->
+            </button>
+        </div>
+
+        <div id="tasks-container">
+            <ul id="tasks-list">
+                <!--
+                    TODO
+                    * use javascript to generate tasks from localstorage 
+                    * include name of task
+                    * include a checkbox
+                        if checkbox is checked,
+                            fireworks display
+                            remove task from list
+                -->
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div id="quote-container">
+            <blockquote id="quotation">
+                <!--
+                    TODO
+                    use javascript to fetch quote from the API requested by user
+                    (e.g. inspirational, zen, kanye, meme, etc.)
+                    * centered
+                -->
+            </blockquote>
+            <div id="wise-person">
+                <!--
+                    TODO
+                    use javascript to fetch the name of the person quoted above
+                    * italics
+                -->
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
