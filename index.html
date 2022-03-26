@@ -20,12 +20,17 @@
         <h3 id="user-name">
             Name
         </h3>
-        <button id="menu-button">
-                <!-- 
-                    button press should trigger a function in javascript:
-                    openMenu()
-                -->
-        </button>
+        <div class="hamburger-menu">
+            <input id="menu-toggle" type="checkbox" />
+            <label class="menu-btn" for="menu-toggle">
+                <span></span>
+            </label>
+        
+            <ul class="menu-box">
+                <li class="menu-item" id="settings">Settings</li>
+                <li class="menu-item" id="about">About</li>
+            </ul>
+        </div>
     </nav>
 
     <header id="jumbotron">
