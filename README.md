@@ -23,3 +23,8 @@ Possible APIS:
 * Forismatic - generate random inspirational quotes - http://forismatic.com/en/api/
 * Stoicism quotes - quotes about stoicism - https://github.com/tlcheah2/stoic-quote-lambda-public-api
 * Zen Quotes - generates zen/philosophy quotes - https://zenquotes.io/
+
+
+# Resources
+
+* Hamburger Menu inspiration from #6 in: https://alvarotrigo.com/blog/hamburger-menu-css/
