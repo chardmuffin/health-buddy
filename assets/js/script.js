@@ -98,7 +98,6 @@ var firstTimeSubmit = function(event) {
 }
 
 // TODO: add more types
-// Maybe: fix the asynchronus thing and have this function return the quote object instead of setting a global var?
 //
 // this function updates currentQuote to a quote of type "type"
 // where type = "kanye", "stoicism", "zen", "dadjoke":
