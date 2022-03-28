@@ -1,14 +1,16 @@
 // GLOBAL VARS
 var currentQuote = {author : "name", quote: "a quotation"}
-var user = "";
-var quoteTypes = ["zen"]; // default quote type. At least one type must be selected and user can override this default.
+var user = null;
+var contentTypes = []; // array to hold all the types of content user specified
 var favorites = []; // push a currentQuote here if user selects it as a favorite
+var settingsModalEl = document.getElementById("settings-modal");
 
 // TODO:
 // this function is called when the "settings" menu item is tapped
 var showSettings = function() {
 
     //same content as firstTime but without welcome message
+    //probably: put everything into one modal rather than several modals with "next" like in firstTime()
 
 }
 
@@ -22,30 +24,77 @@ var showAbout = function() {
 // this function will ask the user for input (name, quote types, etc) if it is their first time using the app
 var firstTime = function() {
 
-    // if there is a name saved, it's not the first time, exit the function
-    if (user) {
+    // if there is a name saved, it's not the first time, load a quote and exit the function
+    if (localStorage.getItem("user") !== null) {
+        displayQuote()
         return;
     }
 
-    // TODO:
-    // open a modal
-
-    // brief welcome message
-
-    // require user to enter their name
-
-    // ask user to select types of quotes they'd like to see (checkboxes)
-    // user must select at least one type
-
-    // "You will be able to update these settings in the future"
+    // show the settings modal with header for first time
+    settingsModalEl.classList.add("is-active")
+    document.querySelector(".modal-card-title").textContent = "Let's Get Started!";
 
     // (maybe) ask user to select app colors (optional - see primary, secondary, tertiary vars in css)
 
     // (maybe) ask user to choose font
 
-    // save button closes modal
+    document.getElementById("first-time-modal-save").addEventListener("click", firstTimeSubmit);
+}
 
-    setLocalStorage()
+// this function is called when the user tries to submit their info on first app visit
+var firstTimeSubmit = function(event) {
+
+    event.preventDefault();
+    console.log("first time modal submit attempt")
+
+    user = document.getElementById("name-input").value.trim();;
+    var hasAdviceSlips = document.getElementById("advice-checkbox").checked;
+    var hasDadJokes = document.getElementById("dad-checkbox").checked;
+    var hasStoicism = document.getElementById("stoicism-checkbox").checked;
+    var hasZen = document.getElementById("zen-checkbox").checked;
+    var hasKanye = document.getElementById("kanye-checkbox").checked;
+    var hasMeme = document.getElementById("meme-checkbox").checked;
+
+    // is name entered?
+    if (!user) {
+        document.getElementById("name-danger").textContent = "Please enter your name";
+    }
+    else {
+        document.getElementById("name-danger").textContent = "";
+    }
+
+    // is at least one checkbox selected?
+    if (!(hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye || hasMeme)) {
+        document.getElementById("checkbox-danger").textContent = "Please select at least one item";
+    }
+    else {
+        document.getElementById("checkbox-danger").textContent = "";
+    }
+
+    // if name is entered and at least one checkbox selected, save settings and close modal
+    if (user && (hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye || hasMeme)) {
+        if (hasAdviceSlips) {
+            contentTypes.push("advice")
+        }
+        if (hasDadJokes) {
+            contentTypes.push("dadjoke")
+        }
+        if (hasStoicism) {
+            contentTypes.push("stoicism")
+        }
+        if (hasZen) {
+            contentTypes.push("zen")
+        }
+        if (hasKanye) {
+            contentTypes.push("kanye")
+        }
+        if (hasMeme) {
+            contentTypes.push("meme")
+        }
+        setLocalStorage()
+        settingsModalEl.classList.remove("is-active")
+        displayQuote();
+    }
 }
 
 // TODO: add more types
@@ -126,7 +175,7 @@ var setQuote = async function(type) {
 var displayQuote = async function() {
 
     // choose a random quote type from array of user specified types
-    var type = quoteTypes[randomNumber(0, quoteTypes.length - 1)];
+    var type = contentTypes[randomNumber(0, contentTypes.length - 1)];
 
     await setQuote(type);
     document.getElementById("quotation").textContent = currentQuote.quote;
@@ -137,7 +186,7 @@ var displayQuote = async function() {
 var getLocalStorage = function() {
     user = localStorage.getItem("user");
     if (user) {
-        quoteTypes = JSON.parse(localStorage.getItem("quoteTypes"));
+        contentTypes = JSON.parse(localStorage.getItem("contentTypes"));
         favorites = JSON.parse(localStorage.getItem("favorites"));
     }
 }
@@ -145,7 +194,7 @@ var getLocalStorage = function() {
 //saves global vars in local storage
 var setLocalStorage = function() {
     localStorage.setItem("user", user);
-    localStorage.setItem("quoteTypes", JSON.stringify(quoteTypes));
+    localStorage.setItem("contentTypes", JSON.stringify(contentTypes));
     localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
@@ -157,7 +206,6 @@ var randomNumber = function(min, max) {
 // call initial functions
 $(document).ready(getLocalStorage);
 $(document).ready(firstTime)
-$(document).ready(displayQuote);
 
 // Listeners
 document.getElementById("settings").addEventListener("click", showSettings);
