@@ -1,16 +1,22 @@
 // GLOBAL VARS
-var currentQuote = {author : "name", quote: "a quotation"}
+var currentContent = {author : "name", quote: "a quotation"}
 var user = null;
 var contentTypes = []; // array to hold all the types of content user specified
-var favorites = []; // push a currentQuote here if user selects it as a favorite
+var favorites = []; // push a currentContent here if user selects it as a favorite
 var settingsModalEl = document.getElementById("settings-modal");
 var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
 
-// TODO:
+// TODO: see below
 // this function is called when the "settings" menu item is tapped
 var showSettings = function() {
 
-    //show the settings modal but without a different message header, and button text is "Update Preferences"
+    // TODO: 
+    // show the settings modal, but
+    // use a different header in preferencesModalHeaderTextEl,
+    // the element with id="preferences-help-text" should be hidden,
+    // change the submit button text (id="settings-modal-save") to something like "Update Preferences"
+    //
+    // the listener at bottom of this file still calls updatePreferences() function to vet input
 
 }
 
@@ -18,36 +24,50 @@ var showSettings = function() {
 // this function is called when the "about" menu item is tapped
 var showAbout = function() {
 
+    // list sources for the quotes
+    // (zen quotes requires this to be somewhere in the app:)
+    // Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
+
+    // nice to have:
+    // mission statement
+
+    // nice to have:
+    // suggestions?/feedback? link
+
+    // nice to have:
+    // buy the developers a cup of coffee! <3 <3 <3
+    // https://www.buymeacoffee.com/
+
 }
 
 // TODO: maybe: finish this
-// this function will ask the user for input (name, quote types, etc) if it is their first time using the app
+// this function will ask the user for input (name, content types, etc) if it is their first time using the app
 var firstTime = function() {
 
-    // if there is a name saved, then it's not the first time, load a quote and exit the function
+    // if there is a name saved, then it's not the first time, load content and exit the function
     if (localStorage.getItem("user") !== null) {
-        displayQuote()
+        displayContent();
         return;
     }
 
     // show the settings modal with header specified for first time
-    settingsModalEl.classList.add("is-active")
+    settingsModalEl.classList.add("is-active");
     preferencesModalHeaderTextEl.textContent = "Let's Get Started!";
 
-    // TODO: (maybe) ask user to select app colors (optional)
-    // add radio buttons to html
+    // TODO: (maybe) ask user to select app theme colors (optional)
+    // add radio buttons to html form
 
-    // TODO: (maybe) ask user to choose font family
-    // add radio buttons to html
+    // TODO: (maybe) ask user to choose font family (optional)
+    // add radio buttons to html form
 }
 
+// TODO: see below
 // this function is called when the user tries to submit their info on first app visit, or when updating preferences
 var updatePreferences = function(event) {
 
     event.preventDefault();
-    console.log("first time modal submit attempt")
 
-    user = document.getElementById("name-input").value.trim();;
+    user = document.getElementById("name-input").value.trim();
     var hasAdviceSlips = document.getElementById("advice-checkbox").checked;
     var hasDadJokes = document.getElementById("dad-checkbox").checked;
     var hasStoicism = document.getElementById("stoicism-checkbox").checked;
@@ -74,41 +94,50 @@ var updatePreferences = function(event) {
     // if name is entered and at least one checkbox selected, save settings and close modal
     if (user && (hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye || hasMeme)) {
         if (hasAdviceSlips) {
-            contentTypes.push("advice")
+            contentTypes.push("advice");
         }
         if (hasDadJokes) {
-            contentTypes.push("dadjoke")
+            contentTypes.push("dadjoke");
         }
         if (hasStoicism) {
-            contentTypes.push("stoicism")
+            contentTypes.push("stoicism");
         }
         if (hasZen) {
-            contentTypes.push("zen")
+            contentTypes.push("zen");
         }
         if (hasKanye) {
-            contentTypes.push("kanye")
+            contentTypes.push("kanye");
         }
         if (hasMeme) {
-            contentTypes.push("meme")
+            contentTypes.push("meme");
         }
-        setLocalStorage()
-        settingsModalEl.classList.remove("is-active")
-        displayQuote();
+        setLocalStorage();
+        settingsModalEl.classList.remove("is-active");
+
+        // TODO:
+        // if this is not the first time saving settings,
+        // then this probably shouldn't refresh the content unless the old content type was removed?
+        // might be nothing to worry about.
+        //
+        // see TODO in displayContent()
+        displayContent();
     }
 }
 
-// TODO: add more types
+// TODO: add more types, "meme", "advice"
+// for memes, probably store url in "quote" and caption in "author"
+// displaying a meme would be handled in displayContent (maybe by seeing if the quote ends in ".jpg")
 //
-// this function updates currentQuote to a quote of type "type"
+// this function updates currentContent to content of type "type"
 // where type = "kanye", "stoicism", "zen", "dadjoke":
 //  {
 //      author: "author name",
-//      quote: "this is the quote"
+//      quote: "this is the content"
 //  }
 //
-// test with setQuote("type-goes-here") in console,
-// then put currentQuote in console
-var setQuote = async function(type) {
+// test with setContent("type-goes-here") in console,
+// then put currentContent in console
+var setContent = async function(type) {
     var url = "";
     headers = {};
     if (type === "kanye") {
@@ -121,9 +150,10 @@ var setQuote = async function(type) {
         url = "https://noahs-server-proj1.herokuapp.com/https://zenquotes.io/api/random";
     }
     else if (type === "dadjoke") {
-        url = "https://icanhazdadjoke.com/"
+        url = "https://icanhazdadjoke.com/";
         headers = {headers: {Accept: "application/json"}};
     }
+    //TODO: handle type meme, advice
 
     await fetch(url, headers)
     .then(response => {
@@ -136,49 +166,57 @@ var setQuote = async function(type) {
     .then(data => {
         //console.log(data);
         if (type === "kanye") {
-            currentQuote.author = "Ye West";
-            currentQuote.quote = data.quote;
+            currentContent.author = "Ye West";
+            currentContent.quote = data.quote;
         }
         else if (type === "stoicism") {
             // if the quote is from twitter, move the @ symbol from end of quote to front of the author's twitter username
             if (data.data.quote.slice(-1) === "@") {
-                currentQuote.author = "@" + data.data.author;
-                currentQuote.quote = data.data.quote.slice(0, -1);
+                currentContent.author = "@" + data.data.author;
+                currentContent.quote = data.data.quote.slice(0, -1);
             }
             else {
-                currentQuote.author = data.data.author;
-                currentQuote.quote = data.data.quote;
+                currentContent.author = data.data.author;
+                currentContent.quote = data.data.quote;
             }
         }
         else if (type === "zen") {
-            currentQuote.author = data[0].a;
-            currentQuote.quote = data[0].q;
+            currentContent.author = data[0].a;
+            currentContent.quote = data[0].q;
         }
         else if (type === "dadjoke") {
-            currentQuote.author = "icanhazdadjoke.com"
-            currentQuote.quote = data.joke;
+            currentContent.author = "icanhazdadjoke.com";
+            currentContent.quote = data.joke;
         }
+        //TODO: handle type meme, advice
 
         //if no author
-        if (currentQuote.author.trim() === "") {
-            currentQuote.author = "Unknown";
+        if (currentContent.author.trim() === "") {
+            currentContent.author = "Unknown";
         }
     })
     .catch(error => {
-        console.log("Unable to connect to " + type + " API: ");
+        console.log("Unable to connect to " + type + " API:");
         console.log(error);
     });
 }
 
-// displays a currentQuote
-var displayQuote = async function() {
+// TODO: see below
+// displays a currentContent
+var displayContent = async function() {
 
-    // choose a random quote type from array of user specified types
+    // TODO: maybe the type selection and/or setContent() should be in a separate function?
+
+    // choose a random content type from array of user specified types
     var type = contentTypes[randomNumber(0, contentTypes.length - 1)];
 
-    await setQuote(type);
-    document.getElementById("quotation").textContent = currentQuote.quote;
-    document.getElementById("author").textContent = currentQuote.author;
+    await setContent(type);
+
+    // TODO: displaying a meme can be handled by seeing if type = "meme" before displaying)
+
+    // display content
+    document.getElementById("quotation").textContent = currentContent.quote;
+    document.getElementById("author").textContent = currentContent.author;
 }
 
 // gets items in local storage and loads them into the global vars
@@ -204,7 +242,7 @@ var randomNumber = function(min, max) {
 
 // call initial functions
 $(document).ready(getLocalStorage);
-$(document).ready(firstTime)
+$(document).ready(firstTime);
 
 // Listeners
 document.getElementById("settings").addEventListener("click", showSettings);

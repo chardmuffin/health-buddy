@@ -11,6 +11,8 @@
     <title>Mental Health Buddy</title>
 </head>
 <body>
+
+    <!-- modal for setting preferences -->
     <div class="modal container is-fluid" id="settings-modal">
         <div class="modal-background"></div>
         <div class="modal-card">
@@ -80,8 +82,8 @@
                     </div>
                     </br>
                     <div class="field">
-                        <p class="help is-italic">
-                            These settings can be updated from the menu.
+                        <p class="help is-italic" id="preferences-help-text">
+                            These settings can be updated from the menu at any time.
                         </p>
                     </div>
                     <div class="field">
@@ -93,9 +95,11 @@
             </section>
         </div>
     </div>
+
+    <!-- nav bar -->
     <nav id="nav-bar">
         <h3 id="user-name">
-            Name
+            <!-- name goes here via script.js -->
         </h3>
         <div class="hamburger-menu">
             <input id="menu-toggle" type="checkbox" />
@@ -114,13 +118,13 @@
         <div id="welcome-message-container">
             <!--
                 TODO
-                use jquery to add icon/image here e.g. <i></i>
+                use jquery to add icon/image here
             -->
         </div>
         <div id="icon-container">
             <!--
                 TODO
-                use jquery to add icon/image here e.g. <i></i>
+                use jquery to add icon/image here
             -->
         </div>
     </header>
@@ -144,8 +148,8 @@
                 * use javascript to generate reminders from localstorage
                 * include an h3 for name of reminder,
                 * on/off slider?
-                * edit button?
-                * delete button?
+                * slide right/left to edit?
+                * slide right/left to delete?
                 
                 nice to have:
                 * frequency
@@ -177,7 +181,12 @@
                     * include a checkbox
                         if checkbox is checked,
                             fireworks display
-                            remove task from list
+                            remove the task from list
+
+                    * maybe: send completed tasks to a "complete section"
+                    * could use bulma tabs for a "complete" tab:
+                    * https://bulma.io/documentation/components/tabs/
+                    * nice to have: if task accidentally completed, go to completed tab and send it back to the other tab
                 -->
             </ul>
         </div>
