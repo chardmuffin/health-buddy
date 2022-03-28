@@ -4,13 +4,13 @@ var user = null;
 var contentTypes = []; // array to hold all the types of content user specified
 var favorites = []; // push a currentQuote here if user selects it as a favorite
 var settingsModalEl = document.getElementById("settings-modal");
+var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
 
 // TODO:
 // this function is called when the "settings" menu item is tapped
 var showSettings = function() {
 
-    //same content as firstTime but without welcome message
-    //probably: put everything into one modal rather than several modals with "next" like in firstTime()
+    //show the settings modal but without a different message header, and button text is "Update Preferences"
 
 }
 
@@ -20,29 +20,29 @@ var showAbout = function() {
 
 }
 
-// TODO: finish this
+// TODO: maybe: finish this
 // this function will ask the user for input (name, quote types, etc) if it is their first time using the app
 var firstTime = function() {
 
-    // if there is a name saved, it's not the first time, load a quote and exit the function
+    // if there is a name saved, then it's not the first time, load a quote and exit the function
     if (localStorage.getItem("user") !== null) {
         displayQuote()
         return;
     }
 
-    // show the settings modal with header for first time
+    // show the settings modal with header specified for first time
     settingsModalEl.classList.add("is-active")
-    document.querySelector(".modal-card-title").textContent = "Let's Get Started!";
+    preferencesModalHeaderTextEl.textContent = "Let's Get Started!";
 
-    // (maybe) ask user to select app colors (optional - see primary, secondary, tertiary vars in css)
+    // TODO: (maybe) ask user to select app colors (optional)
+    // add radio buttons to html
 
-    // (maybe) ask user to choose font
-
-    document.getElementById("first-time-modal-save").addEventListener("click", firstTimeSubmit);
+    // TODO: (maybe) ask user to choose font family
+    // add radio buttons to html
 }
 
-// this function is called when the user tries to submit their info on first app visit
-var firstTimeSubmit = function(event) {
+// this function is called when the user tries to submit their info on first app visit, or when updating preferences
+var updatePreferences = function(event) {
 
     event.preventDefault();
     console.log("first time modal submit attempt")
@@ -209,3 +209,4 @@ $(document).ready(firstTime)
 // Listeners
 document.getElementById("settings").addEventListener("click", showSettings);
 document.getElementById("about").addEventListener("click", showAbout);
+document.getElementById("settings-modal-save").addEventListener("click", updatePreferences);
