@@ -5,20 +5,101 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- TODO:
-
-        link css framework here
-    
-        <link rel="stylesheet" href="#">
-    -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Mental Health Buddy</title>
 </head>
 <body>
+
+    <!-- modal for setting preferences -->
+    <div class="modal container is-fluid" id="settings-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title"></p>
+            </header>
+            <section class="modal-card-body">
+                <form action="submit">
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input class="input" id="name-input" type="text" placeholder="Name">
+                            <p class="help is-danger" id="name-danger"></p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Choose Your Daily Content</label>
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="advice-checkbox">
+                                Advice Slips
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="dad-checkbox">
+                                Dad Jokes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="zen-checkbox">
+                                Zen Quotes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="stoicism-checkbox">
+                                Stoicism Quotes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="kanye-checkbox">
+                                Kanye Quotes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="meme-checkbox">
+                                Memes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <p class="help is-danger" id="checkbox-danger"></p>
+                    </div>
+                    </br>
+                    <div class="field">
+                        <p class="help is-italic" id="preferences-help-text">
+                            These settings can be updated from the menu at any time.
+                        </p>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-link" id="settings-modal-save">Let's Go!</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- nav bar -->
     <nav id="nav-bar">
         <h3 id="user-name">
-            Name
+            <!-- name goes here via script.js -->
         </h3>
         <div class="hamburger-menu">
             <input id="menu-toggle" type="checkbox" />
@@ -37,13 +118,13 @@
         <div id="welcome-message-container">
             <!--
                 TODO
-                use jquery to add icon/image here e.g. <i></i>
+                use jquery to add icon/image here
             -->
         </div>
         <div id="icon-container">
             <!--
                 TODO
-                use jquery to add icon/image here e.g. <i></i>
+                use jquery to add icon/image here
             -->
         </div>
     </header>
@@ -67,8 +148,8 @@
                 * use javascript to generate reminders from localstorage
                 * include an h3 for name of reminder,
                 * on/off slider?
-                * edit button?
-                * delete button?
+                * slide right/left to edit?
+                * slide right/left to delete?
                 
                 nice to have:
                 * frequency
@@ -100,7 +181,12 @@
                     * include a checkbox
                         if checkbox is checked,
                             fireworks display
-                            remove task from list
+                            remove the task from list
+
+                    * maybe: send completed tasks to a "complete section"
+                    * could use bulma tabs for a "complete" tab:
+                    * https://bulma.io/documentation/components/tabs/
+                    * nice to have: if task accidentally completed, go to completed tab and send it back to the other tab
                 -->
             </ul>
         </div>
@@ -116,7 +202,7 @@
                     * centered
                 -->
             </blockquote>
-            <div id="wise-person">
+            <div id="author">
                 <!--
                     TODO
                     use javascript to fetch the name of the person quoted above
