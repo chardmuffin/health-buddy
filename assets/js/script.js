@@ -3,6 +3,7 @@ var currentContent = {author : "name", quote: "a quotation", type: "theType"};
 var user = null;
 var contentTypes = []; // array to hold all the types of content user specified
 var favorites = []; // push a currentContent here if user selects it as a favorite
+var colors = [];
 var preferencesModalEl = document.getElementById("settings-modal");
 var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
 var favoritesModalEl = document.getElementById("favorites-modal");
@@ -78,6 +79,12 @@ var showSettings = function() {
         document.getElementById("favorites-checkbox").closest(".field").classList.add("is-hidden")
     }
 
+    //shows the right colors in the color pickers
+    document.getElementById("primary").value = colors[0];
+    document.getElementById("secondary").value = colors[1];
+    document.getElementById("tertiary").value = colors[2];
+    document.getElementById("fonts").value = colors[3];
+
     preferencesModalEl.addEventListener("click", preferencesClickHandler);
 }
 
@@ -87,6 +94,8 @@ var preferencesClickHandler = function(event) {
     // if clicked cancel, exit buttons, or the background:
     if (event.target.classList.contains("delete") || event.target.classList.contains("modal-background")) {
 
+        // remove testing colors and reapply saved colors
+        applyColors()
         preferencesModalEl.classList.remove("is-active");
     }
 }
@@ -112,6 +121,8 @@ var firstTime = async function() {
 
     // if there is a name saved, then it's not the first time, load content and exit the function
     if (localStorage.getItem("user") !== null) {
+
+        applyColors();
         await setContent(chooseContentType());
         displayContent();
         return;
@@ -122,7 +133,6 @@ var firstTime = async function() {
     preferencesModalHeaderTextEl.textContent = "Let's Get Started!";
 
     // TODO: (maybe) ask user to select app theme colors (optional)
-    // add radio buttons to html form
 
     // TODO: (maybe) ask user to choose font family (optional)
     // add radio buttons to html form
@@ -184,6 +194,16 @@ var updatePreferences = async function(event) {
         if (hasFavorites) {
             contentTypes.push("favorites")
         }
+
+        colors = [];
+        var color1 = document.getElementById("primary").value;
+        var color2 = document.getElementById("secondary").value;
+        var color3 = document.getElementById("tertiary").value;
+        var color4 = document.getElementById("fonts").value;
+
+        colors.push(color1, color2, color3, color4);
+        applyColors();
+
         setLocalStorage();
         preferencesModalEl.classList.remove("is-active");
 
@@ -290,7 +310,11 @@ var generateContent = function(content) {
     aContent.className = "column is-10";
 
     var theContent = document.createElement("div");
+    if (content.type !== "dadjoke" && content.type !== "advice") {
+        theContent.className = "is-italic"
+    }
     var theAuthor = document.createElement("div");
+    theAuthor.className = "has-text-centered"
 
     // create the heart button
     var theHeartContainer = document.createElement("div");
@@ -444,6 +468,7 @@ var getLocalStorage = function() {
     if (user) {
         contentTypes = JSON.parse(localStorage.getItem("contentTypes"));
         favorites = JSON.parse(localStorage.getItem("favorites"));
+        colors = JSON.parse(localStorage.getItem("colors"))
     }
 }
 
@@ -452,6 +477,23 @@ var setLocalStorage = function() {
     localStorage.setItem("user", user);
     localStorage.setItem("contentTypes", JSON.stringify(contentTypes));
     localStorage.setItem("favorites", JSON.stringify(favorites));
+    localStorage.setItem("colors", JSON.stringify(colors))
+}
+
+// applies saved colors to app
+var applyColors = function() {
+    document.documentElement.style.setProperty("--primary", colors[0]);
+    document.documentElement.style.setProperty("--secondary", colors[1]);
+    document.documentElement.style.setProperty("--tertiary", colors[2]);
+    document.documentElement.style.setProperty("--dark", colors[3]);
+}
+
+//changes the colors visually (temporary) to help user decide on a color scheme
+var testColors = function() {
+    document.documentElement.style.setProperty("--primary", document.getElementById("primary").value);
+    document.documentElement.style.setProperty("--secondary", document.getElementById("secondary").value);
+    document.documentElement.style.setProperty("--tertiary", document.getElementById("tertiary").value);
+    document.documentElement.style.setProperty("--dark", document.getElementById("fonts").value);
 }
 
 // utility function to generate a random numeric value between min and max, inclusive
@@ -469,3 +511,7 @@ document.getElementById("about").addEventListener("click", showAbout);
 document.getElementById("favorites").addEventListener("click", showFavorites);
 document.getElementById("settings-modal-save").addEventListener("click", updatePreferences);
 document.getElementById("content-container").addEventListener("click", handleClickHeart)
+document.getElementById("primary").addEventListener("change", testColors);
+document.getElementById("secondary").addEventListener("change", testColors);
+document.getElementById("tertiary").addEventListener("change", testColors);
+document.getElementById("fonts").addEventListener("change", testColors);
