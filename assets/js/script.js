@@ -202,12 +202,13 @@ var updatePreferences = async function(event) {
         var color4 = document.getElementById("fonts").value;
 
         colors.push(color1, color2, color3, color4);
-        applyColors();
 
         setLocalStorage();
         preferencesModalEl.classList.remove("is-active");
 
-        //load content into currentContent, generate and display html
+        //reload page
+        applyColors();
+        loadNavBar()
         currentContent = {author : "name", quote: "a quotation", type: "theType"}
         await setContent(chooseContentType());
         displayContent();
