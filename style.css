@@ -44,7 +44,7 @@
 }
 
 .nav-menu {
-    display: flex;
+    display: grid;
     grid-template-columns: repeat (3, auto);
     list-style: none;
     text-align: center;
@@ -145,3 +145,4 @@
 .menu-item:active {
     background-color: var(--primary);
 }
+
