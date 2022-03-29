@@ -1,9 +1,10 @@
 /* TODO:
     Nice to have: user can changes these colors in settings*/
 :root {
-    --primary: #cfd8dc;
-    --secondary: #aee2a4;
+    --primary: #bfbbda;
+    --secondary: #bee0b8;
     --tertiary: #3456c5;
+    --modal: #bec7ec;
     --dark: #201917;
     --transition-duration: 0.4s;
     touch-action: pan-x pan-y;      /* should prevent zoom on mobile */
@@ -18,6 +19,17 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* COLORS */
+body {
+    background-color: var(--primary);
+    color: var(--dark)
+}
+
+.modal-card-body {
+    background-color: var(--modal);
+}
+
 
 /* HAMBURGER MENU */
 #menu-toggle {
@@ -90,7 +102,6 @@
 .menu-item {
     display: block;
     padding: 12px 24px;
-    color: var(--dark);
     font-size: 20px;
     font-weight: 600;
     transition-duration: var(--transition-duration);
@@ -98,4 +109,27 @@
 
 .menu-item:active {
     background-color: var(--primary);
+}
+
+#space {
+    content: "";
+    display: block;
+    border-bottom: 2px solid var(--dark);
+    width: 85%;
+    margin: 5% auto;
+}
+
+/* FOOTER */
+footer section {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* CONTENT CARD */
+.content-card {
+    margin: 1%;
+}
+.content-card i {
+    color: red;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
 }

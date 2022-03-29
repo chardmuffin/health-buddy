@@ -5,7 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    />
 
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Mental Health Buddy</title>
@@ -18,6 +29,7 @@
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title"></p>
+                <button class="delete is-invisible" id="preferences-close" aria-label="close"></button>
             </header>
             <section class="modal-card-body">
                 <form action="submit">
@@ -40,7 +52,7 @@
                     <div class="field">
                         <div class="control">
                             <label class="checkbox">
-                                <input type="checkbox" id="dad-checkbox">
+                                <input type="checkbox" id="dadjoke-checkbox">
                                 Dad Jokes
                             </label>
                         </div>
@@ -77,6 +89,14 @@
                             </label>
                         </div>
                     </div>
+                    <div class="field is-hidden">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="favorites-checkbox">
+                                Favorites
+                            </label>
+                        </div>
+                    </div>
                     <div class="field">
                         <p class="help is-danger" id="checkbox-danger"></p>
                     </div>
@@ -96,6 +116,24 @@
         </div>
     </div>
 
+    <!-- favorites modal -->
+    <div class="modal" id="favorites-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">View/Edit Favorites</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body" id="favorites-body">
+                <!-- Generate Favorites here -->
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">Save changes</button>
+                <button class="button">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
     <!-- nav bar -->
     <nav id="nav-bar">
         <h3 id="user-name">
@@ -108,6 +146,8 @@
             </label>
         
             <ul class="menu-box">
+                <li class="menu-item" id="favorites">Favorites</li>
+                <li id="space"> </li>
                 <li class="menu-item" id="settings">Settings</li>
                 <li class="menu-item" id="about">About</li>
             </ul>
@@ -128,36 +168,6 @@
             -->
         </div>
     </header>
-
-    <div id="reminders-card">
-        <div id="reminder-header">
-            <h2>Don't Forget...</h2>
-            <button id="add-reminder-button">
-                <!--
-                    TODO
-                    float right
-                    button press should trigger a function in javascript:
-                    addReminderButtonHandler()
-                -->
-            </button>
-        </div>
-
-        <div id="reminders-container">
-            <!--
-                TODO
-                * use javascript to generate reminders from localstorage
-                * include an h3 for name of reminder,
-                * on/off slider?
-                * slide right/left to edit?
-                * slide right/left to delete?
-                
-                nice to have:
-                * frequency
-                * description
-                * send me a quote/meme at random times
-            -->
-        </div>
-    </div>
   
     <div id="task-card">
         <div id="task-header">
@@ -193,23 +203,19 @@
     </div>
 
     <footer>
-        <div id="quote-container">
-            <blockquote id="quotation">
-                <!--
-                    TODO
-                    use javascript to fetch quote from the API requested by user
-                    (e.g. inspirational, zen, kanye, meme, etc.)
-                    * centered
-                -->
-            </blockquote>
-            <div id="author">
-                <!--
-                    TODO
-                    use javascript to fetch the name of the person quoted above
-                    * italics
-                -->
-            </div>
-        </div>
+        <section id="content-container">
+            <!-- script.js loads content here like:
+                <div class = "columns is-mobile content-card">
+                    <div class = "column is-10">
+                        <div>CONTENT GOES HERE</div>
+                        <div>AUTHOR</div>
+                    </div>
+                    <div class = "column">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                </div>
+            -->
+        </section>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
