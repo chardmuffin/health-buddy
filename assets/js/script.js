@@ -1,25 +1,23 @@
 // GLOBAL VARS
-var currentContent = {author : "name", quote: "a quotation", type: "theType"}
+var currentContent = {author : "name", quote: "a quotation", type: "theType"};
 var user = null;
 var contentTypes = []; // array to hold all the types of content user specified
 var favorites = []; // push a currentContent here if user selects it as a favorite
-var tempFavorites = []; // used in the favorites screen
 var preferencesModalEl = document.getElementById("settings-modal");
 var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
 var favoritesModalEl = document.getElementById("favorites-modal");
 var favoritesBodyEl = document.getElementById("favorites-body");
 
-// TODO: see below
 // this function is called when the "settings" menu item is tapped
 var showSettings = function() {
 
-    // TODO: 
     // show the settings modal with new header
     preferencesModalEl.classList.add("is-active");
-    document.getElementById("preferences-close").classList.remove("is-invisible")
+    document.getElementById("preferences-close").classList.remove("is-invisible");
     preferencesModalHeaderTextEl.textContent = "Update Preferences";
 
-    document.getElementById("preferences-help-text").classList.remove("is-active");
+    //remove first time settings help message
+    document.getElementById("preferences-help-text").textContent = "";
 
     // fill name
     document.getElementById("name-input").value = user;
@@ -28,34 +26,58 @@ var showSettings = function() {
     if (contentTypes.includes("advice")) {
         document.getElementById("advice-checkbox").checked = true;
     }
+    else {
+        document.getElementById("advice-checkbox").checked = false;
+    }
     if (contentTypes.includes("dadjoke")) {
         document.getElementById("dadjoke-checkbox").checked = true;
+    }
+    else {
+        document.getElementById("dadjoke-checkbox").checked = false;
     }
     if (contentTypes.includes("stoicism")) {
         document.getElementById("stoicism-checkbox").checked = true;
     }
+    else {
+        document.getElementById("stoicism-checkbox").checked = false;
+    }
     if (contentTypes.includes("zen")) {
         document.getElementById("zen-checkbox").checked = true;
+    }
+    else {
+        document.getElementById("zen-checkbox").checked = false;
     }
     if (contentTypes.includes("kanye")) {
         document.getElementById("kanye-checkbox").checked = true;
     }
+    else {
+        document.getElementById("kanye-checkbox").checked = false;
+    }
     if (contentTypes.includes("meme")) {
         document.getElementById("meme-checkbox").checked = true;
+    }
+    else {
+        document.getElementById("meme-checkbox").checked = false;
     }
     if (contentTypes.includes("favorites")) {
         document.getElementById("favorites-checkbox").checked = true;
     }
+    else {
+        document.getElementById("favorites-checkbox").checked = false;
+    }
 
     // update button text to "save"
-    document.getElementById("settings-modal-save").textContent = "Save"
+    document.getElementById("settings-modal-save").textContent = "Save";
 
     // shows the favorites checkbox if favorites is not empty
     if (favorites.length > 0) {
         document.getElementById("favorites-checkbox").closest(".field").classList.remove("is-hidden");
     }
+    else {
+        document.getElementById("favorites-checkbox").closest(".field").classList.add("is-hidden")
+    }
 
-    preferencesModalEl.addEventListener("click", preferencesClickHandler)
+    preferencesModalEl.addEventListener("click", preferencesClickHandler);
 }
 
 // function handles all clicks in update preferences modal, except submit button
@@ -332,14 +354,51 @@ var showFavorites = function() {
 // handles the favorites modal clicks
 var favoritesClickHandler = function(event) {
 
-    // TODO
-    // create a copy of favorites array to hold temporary changes
-    tempFavorites = favorites.slice();
-
     // if clicked save
     if (event.target.classList.contains("is-success")) {
-        favorites = tempFavorites.slice();
+
+        //temp array to build updated favorites list
+        var tempFavorites = [];
+
+        // get state of all the hearts
+        var inputs = favoritesBodyEl.getElementsByTagName("i")
+
+        var i = 0;
+        for (var input of inputs) {
+            if (input.classList.contains("fa-solid")) {
+                // keep this index of favorites
+                tempFavorites.push(favorites[i]);
+            }
+            i++;
+        }
+
+        favorites = tempFavorites;
+
         setLocalStorage()
+
+        // edge case
+        // if the currentContent was favorited on the home screen, then unfavorited here, updated home screen icon to empty heart
+        if (!favorites.includes(currentContent)) {
+            document.getElementById("content-container").getElementsByTagName("i")[0].className = "fa-regular fa-heart";
+        }
+
+        //edge case
+        // if they unfavorite everything, remove favorites from list of types
+        if (favorites.length === 0) {
+            
+            var index = contentTypes.indexOf("favorites")
+            console.log(index)
+            if (index > -1) {
+                contentTypes.splice(index, 1)
+            }
+
+            // if favorites was the only type selected, change content type to zen by default
+            if (contentTypes.length === 0) {
+                contentTypes = ["zen"];
+            }
+
+            setLocalStorage();
+        }
     }
 
     // if clicked save, cancel, exit buttons, or the background:
@@ -351,15 +410,12 @@ var favoritesClickHandler = function(event) {
     
     //TODO
     else if (event.target.classList.contains("fa-heart")) {
-        console.log('we here')
+
         if (event.target.classList.contains("fa-regular")) {
             event.target.className = "fa-solid fa-heart";
-            // tempFavorites.push(get the specific content);
         }
         else if (event.target.classList.contains("fa-solid")) {
             event.target.className = "fa-regular fa-heart";
-            //const index = favorites.indexOf(get the specific content);
-            //tempFavorites.splice(index, 1)
         }
     }
 }
