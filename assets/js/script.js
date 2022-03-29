@@ -8,6 +8,7 @@ var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
 var favoritesModalEl = document.getElementById("favorites-modal");
 var favoritesBodyEl = document.getElementById("favorites-body");
 
+// TODO: future development: add meme support
 // this function is called when the "settings" menu item is tapped
 var showSettings = function() {
 
@@ -53,12 +54,12 @@ var showSettings = function() {
     else {
         document.getElementById("kanye-checkbox").checked = false;
     }
-    if (contentTypes.includes("meme")) {
+    /*if (contentTypes.includes("meme")) {
         document.getElementById("meme-checkbox").checked = true;
     }
     else {
         document.getElementById("meme-checkbox").checked = false;
-    }
+    }*/
     if (contentTypes.includes("favorites")) {
         document.getElementById("favorites-checkbox").checked = true;
     }
@@ -127,6 +128,7 @@ var firstTime = async function() {
     // add radio buttons to html form
 }
 
+//TODO: future development: add meme support
 // this function is called when the user tries to submit their info on first app visit, or when updating preferences
 var updatePreferences = async function(event) {
 
@@ -138,7 +140,7 @@ var updatePreferences = async function(event) {
     var hasStoicism = document.getElementById("stoicism-checkbox").checked;
     var hasZen = document.getElementById("zen-checkbox").checked;
     var hasKanye = document.getElementById("kanye-checkbox").checked;
-    var hasMeme = document.getElementById("meme-checkbox").checked;
+    //var hasMeme = document.getElementById("meme-checkbox").checked;
     var hasFavorites = document.getElementById("favorites-checkbox").checked;
 
     // is name entered?
@@ -150,7 +152,7 @@ var updatePreferences = async function(event) {
     }
 
     // is at least one checkbox selected?
-    if (!(hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye || hasMeme || hasFavorites)) {
+    if (!(hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye /*|| hasMeme*/ || hasFavorites)) {
         document.getElementById("checkbox-danger").textContent = "Please select at least one item";
     }
     else {
@@ -158,7 +160,7 @@ var updatePreferences = async function(event) {
     }
 
     // if name is entered and at least one checkbox selected, save settings and close modal
-    if (user && (hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye || hasMeme || hasFavorites)) {
+    if (user && (hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye /*|| hasMeme*/ || hasFavorites)) {
 
         contentTypes = [];
         if (hasAdviceSlips) {
@@ -176,9 +178,9 @@ var updatePreferences = async function(event) {
         if (hasKanye) {
             contentTypes.push("kanye");
         }
-        if (hasMeme) {
+        /*if (hasMeme) {
             contentTypes.push("meme");
-        }
+        }*/
         if (hasFavorites) {
             contentTypes.push("favorites")
         }
@@ -192,11 +194,11 @@ var updatePreferences = async function(event) {
     }
 }
 
-// TODO: add more types, "meme", "advice"
+// TODO: add more types, "meme"
 // for memes, probably store url in "quote" and caption in "author"
 //
 // this function updates currentContent to content of type "type"
-// where type = "kanye", "stoicism", "zen", "dadjoke":
+// where type = "kanye", "stoicism", "zen", "dadjoke", "advice":
 //  {
 //      author: "author name",
 //      quote: "this is the content"
@@ -225,8 +227,8 @@ var setContent = async function(type) {
         url = "https://icanhazdadjoke.com/";
         headers = {headers: {Accept: "application/json"}};
     }
-    else if (type === "meme") {
-        url = "https://api.imgflip.com/get_memes";
+    else if (type === "advice") {
+        url = "https://api.adviceslip.com/advice";
     }
 
     await fetch(url, headers)
@@ -238,7 +240,7 @@ var setContent = async function(type) {
         }
     })
     .then(data => {
-        console.log(data);
+        //console.log(data)
         if (type === "kanye") {
             currentContent.author = " - Ye West";
             currentContent.quote = '"' + data.quote + '"';
@@ -262,7 +264,10 @@ var setContent = async function(type) {
             currentContent.author = " - icanhazdadjoke.com";
             currentContent.quote = data.joke;
         }
-        //TODO: handle type meme, advice
+        else if (type === "advice") {
+            currentContent.author = "none";
+            currentContent.quote = data.slip.advice;
+        }
 
         //if no author
         if (currentContent.author.trim() === "") {
@@ -300,12 +305,17 @@ var generateContent = function(content) {
     }
     theHeartContainer.appendChild(theHeart);
 
-    if (content.type !== "meme") {
-        theContent.textContent = content.quote;
-        theAuthor.textContent = content.author;
+    if (content.type === "meme") {
+        // TODO: Future Development: handle displaying a meme
     }
     else {
-        // handle displaying a meme
+        if (content.type === "dadjoke" || content.type === "advice") {
+            theAuthor.textContent = "";
+        }
+        else {
+            theAuthor.textContent = content.author;
+        }
+        theContent.textContent = content.quote;
     }
 
     aContent.append(theContent, theAuthor);
