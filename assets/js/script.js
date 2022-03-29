@@ -225,7 +225,9 @@ var setContent = async function(type) {
         url = "https://icanhazdadjoke.com/";
         headers = {headers: {Accept: "application/json"}};
     }
-    //TODO: handle type meme, advice
+    else if (type === "meme") {
+        url = "https://api.imgflip.com/get_memes";
+    }
 
     await fetch(url, headers)
     .then(response => {
@@ -236,7 +238,7 @@ var setContent = async function(type) {
         }
     })
     .then(data => {
-        //console.log(data);
+        console.log(data);
         if (type === "kanye") {
             currentContent.author = " - Ye West";
             currentContent.quote = '"' + data.quote + '"';
