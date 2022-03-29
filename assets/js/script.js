@@ -5,6 +5,7 @@ var contentTypes = []; // array to hold all the types of content user specified
 var favorites = []; // push a currentContent here if user selects it as a favorite
 var settingsModalEl = document.getElementById("settings-modal");
 var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
+var savedTasks = []; //array to hold existing tasks previously saved
 
 // TODO: see below
 // this function is called when the "settings" menu item is tapped
@@ -233,12 +234,152 @@ var setLocalStorage = function() {
     localStorage.setItem("user", user);
     localStorage.setItem("contentTypes", JSON.stringify(contentTypes));
     localStorage.setItem("favorites", JSON.stringify(favorites));
+    localStorage.setItem("storedTasks", JSON.stringify(savedTasks));
 }
 
 // utility function to generate a random numeric value between min and max, inclusive
 var randomNumber = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+// shows add-task modal when add-task button is clicked to have the user create a new task
+var addTaskButtonHandler = function (event) {
+    var addTaskModal = document.getElementById("add-task-modal");
+    addTaskModal.classList.add("is-active");
+    var addTaskField = document.getElementById("add-task-field"); //textarea box
+    var saveChangesBtn = document.getElementById("save-added-task");
+    var tasksList = document.getElementById("tasks-list");
+
+    //cancels out of add-tasks modal 
+    addTaskModal.onclick = function(event) {
+        var clickedElement = event.target;
+        if(clickedElement.classList.contains("is-danger")) {
+            addTaskModal.classList.remove("is-active");
+        } 
+    }
+    //save changes that will update the tasklists
+    saveChangesBtn.onclick = function () {
+
+        if (addTaskField.value !== "") {
+            var newTask = document.createElement("li");
+            var taskLabel = document.createElement("label");
+            var taskInput = document.createElement("input");
+
+            taskLabel.classList.add("checkbox");
+            taskLabel.textContent = addTaskField.value;
+            taskInput.setAttribute("type","checkbox");           
+            addTaskField.value = "";
+            newTask.classList.add("has-background-info-light");
+
+            //Save newly created task in localStorage
+            var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
+            if (storedTasks == null) {
+                storedTasks = savedTasks;
+            }
+            savedTasks = storedTasks;
+            savedTasks.push(taskLabel.textContent);
+            setLocalStorage();
+
+            taskLabel.appendChild(taskInput);
+            newTask.appendChild(taskLabel);
+            tasksList.appendChild(newTask);
+
+            addTaskModal.classList.remove("is-active");
+        }
+
+        addTaskField.setAttribute("placeholder", "Input a peaceful task");
+        
+    }
+
+}
+
+// loads tasks the user previously created to continue where they left off
+var loadTasks = function () {
+        var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
+        var tasksList = document.getElementById("tasks-list");
+
+        if (storedTasks !== null) {
+        for (var task = 0; task < storedTasks.length; task++) {
+            var newTask = document.createElement("li");
+            var taskLabel = document.createElement("label");
+            var taskInput = document.createElement("input");
+
+            newTask.classList.add("has-background-info-light");
+            taskLabel.classList.add("checkbox");
+            taskLabel.textContent = storedTasks[task];
+            taskInput.setAttribute("type","checkbox");
+            taskLabel.appendChild(taskInput);
+            newTask.appendChild(taskLabel);
+            tasksList.appendChild(newTask);
+        }
+    }
+}
+
+//mark tasks as complete to move them to the completed tasks pane
+var markTaskComplete = function () {
+    var checkedOffTasks = document.querySelectorAll("#tasks-list li input");
+    var completeTaskBtn = document.getElementById("completed-task-btn");
+    var tasksCounter = 0;
+    for (var task = 0; task < checkedOffTasks.length; task++) {
+        if (checkedOffTasks[task].checked === true) {
+            completeTaskBtn.style.display = "inline-flex";
+
+        }
+        else if (checkedOffTasks[task].checked === false) {
+            tasksCounter += 1;
+            if (tasksCounter == checkedOffTasks.length) {
+                completeTaskBtn.style.display = "none";
+            }
+        }
+    }
+}
+
+// move completed tasks to completed tasks pane for tracking accomplishments
+var moveTasksToComplete = function () {
+    var checkedOffTasks = document.querySelectorAll("#tasks-list li input");
+    var completedTasksPane = document.getElementById("completed-tasks");
+
+    for (var task = 0; task < checkedOffTasks.length; task++) {
+        if (checkedOffTasks[task].checked === true) {
+            var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
+            var taskText = document.createElement("p");
+            var taskLabel = checkedOffTasks[task].parentNode;
+            for (var stored = 0; stored < storedTasks.length; stored++) {
+                if (storedTasks[stored] == taskLabel.textContent) {
+                    const taskIndex = storedTasks.indexOf(storedTasks[stored]);
+                    storedTasks.splice(taskIndex, 1);
+                    localStorage.setItem("storedTasks", JSON.stringify(storedTasks));
+                }
+            }
+            taskText.textContent = taskLabel.textContent;
+            completedTasksPane.append(taskText);
+            taskLabel.parentNode.remove();
+        }
+    }
+    }
+// switches tasks panes, which will allow either current tasks or completed tasks to appear
+var switchTasksPane = function (event) {
+    if (event.target.matches("span")) {
+        var currentTasksBtn = document.getElementById("current-tasks-pane");
+        var completedTasksBtn = document.getElementById("completed-tasks-pane");
+        var currentTasks = document.getElementById("tasks-list");
+        var completedTasksPane = document.getElementById("completed-tasks");
+        var taskPane = event.target.parentNode.parentNode;
+
+        if (taskPane == currentTasksBtn) {
+            completedTasksBtn.classList.remove("is-active");
+            completedTasksPane.style.display = "none";
+            currentTasksBtn.classList.add("is-active");
+            currentTasks.style.display = "flex";
+        }
+        else if (taskPane == completedTasksBtn) {
+            currentTasksBtn.classList.remove("is-active");
+            currentTasks.style.display = "none"
+            completedTasksBtn.classList.add("is-active");
+            completedTasksPane.style.display = "flex";
+        }
+    }
+}
 
 // call initial functions
 $(document).ready(getLocalStorage);
@@ -248,3 +389,8 @@ $(document).ready(firstTime);
 document.getElementById("settings").addEventListener("click", showSettings);
 document.getElementById("about").addEventListener("click", showAbout);
 document.getElementById("settings-modal-save").addEventListener("click", updatePreferences);
+document.getElementById("add-new-task").addEventListener("click", addTaskButtonHandler);
+document.getElementById("tasks-list").addEventListener("click", markTaskComplete)
+document.getElementById("completed-task-btn").addEventListener("click",moveTasksToComplete);
+document.getElementById("tasks-pane").addEventListener("click",switchTasksPane);
+document.addEventListener("DOMContentLoaded", loadTasks);
