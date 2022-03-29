@@ -30,7 +30,6 @@ body {
     background-color: var(--modal);
 }
 
-
 /* HAMBURGER MENU */
 #menu-toggle {
     opacity: 0;
@@ -60,7 +59,7 @@ body {
     right: 20px;
     width: 26px;
     height: 26px;
-    z-index: 1;
+    z-index: 100;
 }
 
 .menu-btn > span,
@@ -97,6 +96,7 @@ body {
     background-color: var(--secondary);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, .8);
     transition-duration: var(--transition-duration);
+    z-index: 99;
 }
 
 .menu-item {
@@ -104,7 +104,6 @@ body {
     padding: 12px 24px;
     font-size: 20px;
     font-weight: 600;
-    transition-duration: var(--transition-duration);
 }
 
 .menu-item:active {
