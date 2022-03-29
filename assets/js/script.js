@@ -496,6 +496,12 @@ var testColors = function() {
     document.documentElement.style.setProperty("--dark", document.getElementById("fonts").value);
 }
 
+var loadNavBar = function() {
+    if (user) {
+        document.getElementById("user-name").textContent = user;
+    }
+}
+
 // utility function to generate a random numeric value between min and max, inclusive
 var randomNumber = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -504,6 +510,7 @@ var randomNumber = function(min, max) {
 // call initial functions
 $(document).ready(getLocalStorage);
 $(document).ready(firstTime);
+$(document).ready(loadNavBar);
 
 // Listeners
 document.getElementById("settings").addEventListener("click", showSettings);

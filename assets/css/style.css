@@ -20,23 +20,12 @@
     
 }
 
-/* COLORS */
-* {
-    color: var(--dark)
+/* NAV BAR */
+nav {
+    display: flex;
 }
-
-body {
-    background-color: var(--primary);
-    color: var(--dark)
-}
-
-.modal-card-body {
-    background-color: var(--primary);
-}
-
-footer {
-    width: 100%;
-    background-color: var(--tertiary);
+nav h3 {
+    padding: 8px;
 }
 
 /* HAMBURGER MENU */
@@ -102,7 +91,6 @@ footer {
     margin: 0;
     padding: 80px 0;
     list-style: none;
-    background-color: var(--secondary);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, .8);
     transition-duration: var(--transition-duration);
     z-index: 5;
@@ -144,6 +132,35 @@ footer section {
     margin: 1%;
 }
 .content-card i {
-    color: red;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
+}
+
+/* COLORS */
+*,
+p,
+.label,
+.title,
+.modal-card-title {
+    color: var(--dark)
+}
+
+.content-card i {
+    color: red;
+}
+
+body,
+.modal-card-body {
+    background-color: var(--primary);
+}
+
+.menu-box,
+.modal-card-head,
+nav {
+    background-color: var(--secondary);
+}
+
+footer,
+.modal-card-foot {
+    width: 100%;
+    background-color: var(--tertiary);
 }
