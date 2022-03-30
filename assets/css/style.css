@@ -1,11 +1,13 @@
 /* TODO:
     Nice to have: user can changes these colors in settings*/
 :root {
-    --primary: #cfd8dc;
-    --secondary: #aee2a4;
-    --tertiary: #3456c5;
+    --primary: #d7d4ec;
+    --secondary: #bee0b8;
+    --tertiary: #e9c4b3;
     --dark: #201917;
     --transition-duration: 0.4s;
+    touch-action: pan-x pan-y;      /* should prevent zoom on mobile */
+    height: 100%;                   /* should prevent zoom on mobile */
 }
 
 /* TODO:
@@ -15,6 +17,15 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
+/* NAV BAR */
+nav {
+    display: flex;
+}
+nav h3 {
+    padding: 8px;
 }
 
 /* HAMBURGER MENU */
@@ -46,7 +57,7 @@
     right: 20px;
     width: 26px;
     height: 26px;
-    z-index: 999;
+    z-index: 6;
 }
 
 .menu-btn > span,
@@ -80,20 +91,101 @@
     margin: 0;
     padding: 80px 0;
     list-style: none;
-    background-color: var(--secondary);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, .8);
     transition-duration: var(--transition-duration);
+    z-index: 5;
 }
 
 .menu-item {
     display: block;
     padding: 12px 24px;
-    color: var(--dark);
     font-size: 20px;
     font-weight: 600;
-    transition-duration: var(--transition-duration);
 }
 
 .menu-item:active {
     background-color: var(--primary);
+}
+
+#space {
+    content: "";
+    display: block;
+    border-bottom: 2px solid var(--dark);
+    width: 85%;
+    margin: 5% auto;
+}
+
+/* FOOTER */
+footer {
+    position: absolute;
+    bottom: 0;
+}
+
+footer section {
+    padding-bottom: 2%;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* CONTENT CARD */
+.content-card {
+    margin: 1%;
+}
+.content-card i {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
+}
+
+/* COLORS */
+*,
+p,
+.label,
+.title,
+.modal-card-title {
+    color: var(--dark)
+}
+
+.content-card i {
+    color: red;
+}
+
+body,
+.modal-card-body {
+    background-color: var(--primary);
+}
+
+.menu-box,
+.modal-card-head,
+nav {
+    background-color: var(--secondary);
+}
+
+footer,
+.modal-card-foot {
+    width: 100%;
+    background-color: var(--tertiary);
+}
+
+#tasks-list, #completed-tasks {
+    /* adds background color to add task field */
+}
+
+#completed-tasks {
+    display: none;
+
+}
+
+#tasks-list > li, #completed-tasks > li {
+    margin: 5px 0;
+}
+
+#tasks-list > li *, #completed-tasks > li * {
+    margin: 0 5px;
+}
+
+#completed-task-btn {
+    display: none;
+    width: 20%;
+    margin-right: 10px;
+    font-weight: 600;
+    font-size: 0.7rem;
 }
