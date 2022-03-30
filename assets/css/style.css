@@ -146,21 +146,34 @@ footer section {
 }
 
 /* TASKS */
-#tasks-list, #completed-tasks {
-    /* adds background color to add task field */
-}
 
 #completed-tasks {
     display: none;
 
 }
 
-#tasks-list > li, #completed-tasks > li {
+#tasks-list, #completed-tasks {
+    margin: 15px;
+}
+
+#tasks-list > li, #completed-tasks > p {
+    font-size: 1.1rem;
     margin: 5px 0;
+    padding: 10px 0;
+    border-radius: 10px;
+    background-color: rgb(193, 233, 235);
 }
 
 #tasks-list > li *, #completed-tasks > li * {
     margin: 0 5px;
+}
+
+#tasks-list ul li label {
+    float: left;
+}
+
+#tasks-list ul li label input {
+    float: right;
 }
 
 #completed-task-btn {
@@ -169,6 +182,12 @@ footer section {
     margin-right: 10px;
     font-weight: 600;
     font-size: 0.7rem;
+}
+
+#task-max-message {
+    position: absolute;
+    top: 50%;
+    display: none;
 }
 
 
@@ -209,3 +228,9 @@ footer,
     width: 100%;
     background-color: var(--tertiary);
 }
+
+.message-body,
+.message-body span {
+    color: #00947e;
+}
+

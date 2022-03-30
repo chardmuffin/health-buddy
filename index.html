@@ -200,7 +200,7 @@
         </div>
     </header>
   
-    <div id="task-card">
+    <div class="section is-large" id="task-card">
         <div class="is-flex is-justify-content-center" id="task-header">
             <h2 class="title is-4">Self-care Tasks</h2>
             <button class="button is-primary ml-5" id="add-new-task">+</button>
@@ -245,12 +245,6 @@
             </ul>
             <ul class="is-flex-direction-column" id="completed-tasks">
                 <!-- potential field for completed content -->
-                <li>
-                    This is example text. Completed tasks will be...
-                </li>
-                <li>
-                    ...saved here
-                </li>
             </ul>
                 <!--
                     TODO
@@ -270,7 +264,21 @@
         </div>
         
     </div>
-
+    <article class="message is-medium is-primary" id="task-max-message">
+        <div class="message-header">
+            <p> 
+                <i class="fa-solid fa-dove"></i>
+                A little at a time 
+            </p>
+            <button class="delete" id="message-cancel"></button>
+        </div>
+        <div class="message-body is-flex is-flex-direction-column">
+            It's better to complete a few tasks first before carrying an extra load on your shoulders.
+            Each task you complete will allow you to add one additional task, up to 10.
+            <br />
+            <span class="is-align-self-flex-end"></span>
+        </div>
+      </article>
     <footer>
         <section id="content-container">
             <!-- script.js loads content here like:

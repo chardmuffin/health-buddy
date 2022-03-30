@@ -9,6 +9,8 @@ var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
 var favoritesModalEl = document.getElementById("favorites-modal");
 var favoritesBodyEl = document.getElementById("favorites-body");
 var savedTasks = []; //array to hold existing tasks previously saved
+var completedTasks = [];
+var addTaskMax = 3;
 
 // TODO: future development: add meme support
 // this function is called when the "settings" menu item is tapped
@@ -105,8 +107,6 @@ var preferencesClickHandler = function(event) {
 // this function is called when the "about" menu item is tapped
 var showAbout = function() {
 
-    window.open("https://github.com/chardmuffin/mental-health-buddy", '_blank');
-
     // list sources for the quotes
     // (zen quotes requires this to be somewhere in the app:)
     // Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
@@ -166,7 +166,7 @@ var updatePreferences = async function(event) {
 
     // is at least one checkbox selected?
     if (!(hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye /*|| hasMeme*/ || hasFavorites)) {
-        document.getElementById("checkbox-danger").textContent = "Please select at least one type of content";
+        document.getElementById("checkbox-danger").textContent = "Please select at least one item";
     }
     else {
         document.getElementById("checkbox-danger").textContent = "";
@@ -515,11 +515,18 @@ var randomNumber = function(min, max) {
 
 // shows add-task modal when add-task button is clicked to have the user create a new task
 var addTaskButtonHandler = function (event) {
+    addTaskMax = JSON.parse(localStorage.getItem("addTaskMax"));
+    var tasksList = document.getElementById("tasks-list");
+    if (addTaskMax == tasksList.children.length || addTaskMax === 10 && addTaskMax == tasksList.children.length) {
+        taskMaxMessage();
+        return;
+    }
+    
     var addTaskModal = document.getElementById("add-task-modal");
     addTaskModal.classList.add("is-active");
     var addTaskField = document.getElementById("add-task-field"); //textarea box
     var saveChangesBtn = document.getElementById("save-added-task");
-    var tasksList = document.getElementById("tasks-list");
+    
 
     //cancels out of add-tasks modal 
     addTaskModal.onclick = function(event) {
@@ -540,7 +547,6 @@ var addTaskButtonHandler = function (event) {
             taskLabel.textContent = addTaskField.value;
             taskInput.setAttribute("type","checkbox");           
             addTaskField.value = "";
-            newTask.classList.add("has-background-info-light");
 
             //Save newly created task in localStorage
             var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
@@ -558,14 +564,18 @@ var addTaskButtonHandler = function (event) {
             addTaskModal.classList.remove("is-active");
         }
 
-        addTaskField.setAttribute("placeholder", "Input a peaceful task");
-    }
+        addTaskField.setAttribute("placeholder", "Input a peaceful task"); 
+    } 
 }
 
 // loads tasks the user previously created to continue where they left off
 var loadTasks = function () {
         var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
         var tasksList = document.getElementById("tasks-list");
+        var completedTasksPane = document.getElementById("completed-tasks");
+        addTaskMax = JSON.parse(localStorage.getItem("addTaskMax")) ?? 3;
+        localStorage.setItem("addTaskMax", JSON.stringify(addTaskMax));
+        completedTasks = JSON.parse(localStorage.getItem("completedTasks"));
 
         if (storedTasks !== null) {
         for (var task = 0; task < storedTasks.length; task++) {
@@ -573,13 +583,20 @@ var loadTasks = function () {
             var taskLabel = document.createElement("label");
             var taskInput = document.createElement("input");
 
-            newTask.classList.add("has-background-info-light");
             taskLabel.classList.add("checkbox");
             taskLabel.textContent = storedTasks[task];
             taskInput.setAttribute("type","checkbox");
             taskLabel.appendChild(taskInput);
             newTask.appendChild(taskLabel);
             tasksList.appendChild(newTask);
+        }
+
+        if(completedTasks !== null) {
+            for (var task = 0; task < completedTasks.length; task++) {
+                var taskText = document.createElement("p");
+                taskText.textContent = completedTasks[task];
+                completedTasksPane.appendChild(taskText);
+            }
         }
     }
 }
@@ -594,7 +611,7 @@ var markTaskComplete = function () {
             completeTaskBtn.style.display = "inline-flex";
 
         }
-        else if (checkedOffTasks[task].checked === false) {
+        else if (checkedOffTasks[task].checked === false ) {
             tasksCounter += 1;
             if (tasksCounter == checkedOffTasks.length) {
                 completeTaskBtn.style.display = "none";
@@ -607,6 +624,8 @@ var markTaskComplete = function () {
 var moveTasksToComplete = function () {
     var checkedOffTasks = document.querySelectorAll("#tasks-list li input");
     var completedTasksPane = document.getElementById("completed-tasks");
+    var completeTaskBtn = document.getElementById("completed-task-btn");
+    var completedTasks = JSON.parse(localStorage.getItem("completedTasks")) ?? [];
 
     for (var task = 0; task < checkedOffTasks.length; task++) {
         if (checkedOffTasks[task].checked === true) {
@@ -621,33 +640,48 @@ var moveTasksToComplete = function () {
                 }
             }
             taskText.textContent = taskLabel.textContent;
+            completedTasks.push(taskText.textContent);
+            localStorage.setItem("completedTasks",JSON.stringify(completedTasks));
+            addTaskMax < 10 ? addTaskMax++ : addTaskMax = 10;
+            localStorage.setItem("addTaskMax", JSON.stringify(addTaskMax));
             completedTasksPane.append(taskText);
             taskLabel.parentNode.remove();
+            completeTaskBtn.style.display = "none";
         }
     }
     }
 // switches tasks panes, which will allow either current tasks or completed tasks to appear
 var switchTasksPane = function (event) {
-    if (event.target.matches("span")) {
+        var taskPane = event.target;
         var currentTasksBtn = document.getElementById("current-tasks-pane");
         var completedTasksBtn = document.getElementById("completed-tasks-pane");
         var currentTasks = document.getElementById("tasks-list");
         var completedTasksPane = document.getElementById("completed-tasks");
-        var taskPane = event.target.parentNode.parentNode;
-
-        if (taskPane == currentTasksBtn) {
+        
+        if (currentTasksBtn.contains(taskPane)) {
             completedTasksBtn.classList.remove("is-active");
             completedTasksPane.style.display = "none";
             currentTasksBtn.classList.add("is-active");
             currentTasks.style.display = "flex";
         }
-        else if (taskPane == completedTasksBtn) {
+        else if (completedTasksBtn.contains(taskPane)) {
             currentTasksBtn.classList.remove("is-active");
             currentTasks.style.display = "none"
             completedTasksBtn.classList.add("is-active");
             completedTasksPane.style.display = "flex";
         }
-    }
+}
+// popup message when users try to create another task beyond the current task limit
+var taskMaxMessage = function () {
+    var maxMessageContainer = document.getElementById("task-max-message");
+    var cancelButton = document.getElementById("message-cancel"); 
+    var tasksTotalContainer = maxMessageContainer.querySelector("div:nth-child(2) span");
+
+    tasksTotalContainer.textContent = `Currently at: ${addTaskMax}`;
+    maxMessageContainer.style.display = "block";
+    cancelButton.addEventListener("click", function () {
+        maxMessageContainer.style.display = "none";
+    })
 }
 
 // call initial functions
