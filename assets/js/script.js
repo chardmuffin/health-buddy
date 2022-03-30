@@ -105,6 +105,8 @@ var preferencesClickHandler = function(event) {
 // this function is called when the "about" menu item is tapped
 var showAbout = function() {
 
+    window.open("https://github.com/chardmuffin/mental-health-buddy", '_blank');
+
     // list sources for the quotes
     // (zen quotes requires this to be somewhere in the app:)
     // Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
@@ -164,7 +166,7 @@ var updatePreferences = async function(event) {
 
     // is at least one checkbox selected?
     if (!(hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye /*|| hasMeme*/ || hasFavorites)) {
-        document.getElementById("checkbox-danger").textContent = "Please select at least one item";
+        document.getElementById("checkbox-danger").textContent = "Please select at least one type of content";
     }
     else {
         document.getElementById("checkbox-danger").textContent = "";
