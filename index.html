@@ -167,6 +167,9 @@
         <h3 class="title is-3" id="user-name">
             <!-- name goes here via script.js -->
         </h3>
+        <h5 class="subtitle is-5">
+            Mental Health Buddy
+        </h5>
         <div class="hamburger-menu">
             <input id="menu-toggle" type="checkbox" />
             <label class="menu-btn" for="menu-toggle">
@@ -197,7 +200,7 @@
         </div>
     </header>
   
-    <div id="task-card">
+    <div class="section is-large" id="task-card">
         <div class="is-flex is-justify-content-center" id="task-header">
             <h2 class="title is-4">Self-care Tasks</h2>
             <button class="button is-primary ml-5" id="add-new-task">+</button>
@@ -205,7 +208,7 @@
 
         <div class="modal container is-fluid" id="add-task-modal">
             <div class="modal-background is-flex is-justify-content-center is-align-content-center">
-                <div class="modal-card has-background-white py-4 px-4">
+                <div class="modal-card py-4 px-4">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Peaceful Todos</p>
                         <button class="delete button is-danger" aria-label="close">x</button>
@@ -237,17 +240,23 @@
                       </a>
                 </li>  
             </ul>
-            <ul class="is-flex-direction-column" id="tasks-list">
-                <!-- tasks content appears here -->
+            <ul class="is-flex-direction-column card" id="tasks-list-container">
+                <li class="is-flex is-flex-direction-column is-align-items-center">
+                    <ul class="is-flex is-flex-direction-column">
+                        <!--date dyamically placed here -->
+                    </ul>
+                    <ul class="is-flex">
+                        <li>Peaceful Tasks: Peaceful Day</li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="is-flex-direction-column" id="tasks-list">
+                        <!-- tasks content appears here -->
+                    </ul>
+                </li>
             </ul>
             <ul class="is-flex-direction-column" id="completed-tasks">
                 <!-- potential field for completed content -->
-                <li>
-                    This is example text. Completed tasks will be...
-                </li>
-                <li>
-                    ...saved here
-                </li>
             </ul>
                 <!--
                     TODO
@@ -263,11 +272,25 @@
                     * https://bulma.io/documentation/components/tabs/
                     * nice to have: if task accidentally completed, go to completed tab and send it back to the other tab
                 -->
-            <button class="button is-small is-success is-align-self-flex-end" id="completed-task-btn">Mark Complete</button>
+            <button class="button is-small is-align-self-flex-end" id="completed-task-btn">Mark Complete</button>
         </div>
         
     </div>
-
+    <article class="message is-medium is-primary" id="task-max-message">
+        <div class="message-header">
+            <p> 
+                <i class="fa-solid fa-dove"></i>
+                A little at a time 
+            </p>
+            <button class="delete" id="message-cancel"></button>
+        </div>
+        <div class="message-body is-flex is-flex-direction-column">
+            It's better to complete a few tasks first before carrying an extra load on your shoulders.
+            Each task you complete will allow you to add one additional task, up to 10.
+            <br />
+            <span class="is-align-self-flex-end"></span>
+        </div>
+      </article>
     <footer>
         <section id="content-container">
             <!-- script.js loads content here like:

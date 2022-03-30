@@ -21,11 +21,21 @@
 }
 
 /* NAV BAR */
+
 nav {
     display: flex;
 }
+
 nav h3 {
     padding: 8px;
+}
+
+nav h5 {
+    align-self: flex-end;
+}
+
+.subtitle:not(:last-child) {
+    margin-bottom: 0;
 }
 
 /* HAMBURGER MENU */
@@ -91,7 +101,7 @@ nav h3 {
     margin: 0;
     padding: 80px 0;
     list-style: none;
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, .8);
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .8);
     transition-duration: var(--transition-duration);
     z-index: 5;
 }
@@ -135,12 +145,106 @@ footer section {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
 }
 
+/* TASKS */
+
+#completed-tasks {
+    display: none;
+
+}
+
+#tasks-list-container, #completed-tasks {
+    box-shadow: 0 0 12px 4px rgba(143, 110, 215, 0.2);
+    margin: 15px;
+}
+
+#tasks-list-container > li:first-child {
+    width: 100%;
+    height: 13vh;
+    padding: 10px;
+    background: linear-gradient(0deg, #8f6ddb 0%, #d17ef2 100%);
+}
+
+#tasks-list-container > li:first-child * {
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#tasks-list-container > li:first-child ul:nth-child(2) > * {
+    margin-right: 5%;
+}
+
+#tasks-list-container > li:nth-child(2) {
+    width: 100%;
+    max-height: 35vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#tasks-list {
+    width: 100%;
+    height: 35vh;
+}
+
+#tasks-list > li, #completed-tasks > p {
+    width: 80%;
+    font-size: 1.1rem;
+    margin: 5px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(109, 211, 214);
+}
+
+#tasks-list > li *, #completed-tasks > li * {
+    color: gray;
+    margin: 0 5px;
+}
+
+#tasks-list ul li label {
+    float: right;
+}
+
+#tasks-list ul li label input {
+    float: left;
+}
+
+#completed-task-btn {
+    display: none;
+    width: 25%;
+    border: 2px solid #643e04;
+    box-shadow: #643e04 2px -2px 0 0;
+    background-color: rgb(231, 185, 59);
+    color: var(--dark);
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+#completed-task-btn:active {
+    box-shadow: #643e04 2px -4px 0 0;
+    transform: translate(2px,2px);
+}
+
+#task-max-message {
+    position: absolute;
+    top: 50%;
+    display: none;
+}
+
+
+
+
+
+
+
 /* COLORS */
 *,
 p,
 .label,
 .title,
-.modal-card-title {
+.subtitle
+.modal-card-title,
+.checkbox:hover {
     color: var(--dark)
 }
 
@@ -149,6 +253,7 @@ p,
 }
 
 body,
+html,
 .modal-card-body {
     background-color: var(--primary);
 }
@@ -165,27 +270,8 @@ footer,
     background-color: var(--tertiary);
 }
 
-#tasks-list, #completed-tasks {
-    /* adds background color to add task field */
+.message-body,
+.message-body span {
+    color: #00947e;
 }
 
-#completed-tasks {
-    display: none;
-
-}
-
-#tasks-list > li, #completed-tasks > li {
-    margin: 5px 0;
-}
-
-#tasks-list > li *, #completed-tasks > li * {
-    margin: 0 5px;
-}
-
-#completed-task-btn {
-    display: none;
-    width: 20%;
-    margin-right: 10px;
-    font-weight: 600;
-    font-size: 0.7rem;
-}

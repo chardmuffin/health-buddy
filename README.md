@@ -1,6 +1,10 @@
-# health-buddy
+# Mental Health Buddy
 
-Send yourself gentle mental health reminders and messages using Health Buddy! Choose the frequency of reminders, when you would like to be notified, the type of reminder (quote vs custom) and more!
+Send yourself gentle mental health reminders and messages using Mental Health Buddy! Choose the frequency of reminders, when you would like to be notified, the type of reminder (quote vs custom) and more!
+
+Access the deployed webapp at [https://chardmuffin.github.io/mental-health-buddy/](https://chardmuffin.github.io/mental-health-buddy/)
+
+Access the deployed webapp at [https://chardmuffin.github.io/mental-health-buddy/](https://chardmuffin.github.io/mental-health-buddy/)
 
 # User Story
 ```
