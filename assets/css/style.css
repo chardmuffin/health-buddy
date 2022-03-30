@@ -164,3 +164,28 @@ footer,
     width: 100%;
     background-color: var(--tertiary);
 }
+
+#tasks-list, #completed-tasks {
+    /* adds background color to add task field */
+}
+
+#completed-tasks {
+    display: none;
+
+}
+
+#tasks-list > li, #completed-tasks > li {
+    margin: 5px 0;
+}
+
+#tasks-list > li *, #completed-tasks > li * {
+    margin: 0 5px;
+}
+
+#completed-task-btn {
+    display: none;
+    width: 20%;
+    margin-right: 10px;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
