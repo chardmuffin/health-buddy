@@ -4,8 +4,6 @@ Send yourself gentle mental health reminders and messages using Mental Health Bu
 
 Access the deployed webapp at [https://chardmuffin.github.io/mental-health-buddy/](https://chardmuffin.github.io/mental-health-buddy/)
 
-Access the deployed webapp at [https://chardmuffin.github.io/mental-health-buddy/](https://chardmuffin.github.io/mental-health-buddy/)
-
 # User Story
 ```
 AS A stressed out person
