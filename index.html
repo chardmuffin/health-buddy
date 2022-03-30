@@ -240,8 +240,20 @@
                       </a>
                 </li>  
             </ul>
-            <ul class="is-flex-direction-column" id="tasks-list">
-                <!-- tasks content appears here -->
+            <ul class="is-flex-direction-column card" id="tasks-list-container">
+                <li class="is-flex is-flex-direction-column is-align-items-center">
+                    <ul class="is-flex is-flex-direction-column">
+                        <!--date dyamically placed here -->
+                    </ul>
+                    <ul class="is-flex">
+                        <li>Peaceful Tasks: Peaceful Day</li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="is-flex-direction-column" id="tasks-list">
+                        <!-- tasks content appears here -->
+                    </ul>
+                </li>
             </ul>
             <ul class="is-flex-direction-column" id="completed-tasks">
                 <!-- potential field for completed content -->
@@ -260,7 +272,7 @@
                     * https://bulma.io/documentation/components/tabs/
                     * nice to have: if task accidentally completed, go to completed tab and send it back to the other tab
                 -->
-            <button class="button is-small is-success is-align-self-flex-end" id="completed-task-btn">Mark Complete</button>
+            <button class="button is-small is-align-self-flex-end" id="completed-task-btn">Mark Complete</button>
         </div>
         
     </div>

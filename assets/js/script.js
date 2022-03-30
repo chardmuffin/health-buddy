@@ -10,7 +10,7 @@ var favoritesModalEl = document.getElementById("favorites-modal");
 var favoritesBodyEl = document.getElementById("favorites-body");
 var savedTasks = []; //array to hold existing tasks previously saved
 var completedTasks = [];
-var addTaskMax = 3;
+var addTaskMax = 2;
 
 // TODO: future development: add meme support
 // this function is called when the "settings" menu item is tapped
@@ -545,6 +545,8 @@ var addTaskButtonHandler = function (event) {
 
             taskLabel.classList.add("checkbox");
             taskLabel.textContent = addTaskField.value;
+            taskLabel.setAttribute("style", "float: left");
+            taskInput.setAttribute("style", "float: right");
             taskInput.setAttribute("type","checkbox");           
             addTaskField.value = "";
 
@@ -557,10 +559,8 @@ var addTaskButtonHandler = function (event) {
             savedTasks.push(taskLabel.textContent);
             setLocalStorage();
 
-            taskLabel.appendChild(taskInput);
-            newTask.appendChild(taskLabel);
+            newTask.append(taskInput, taskLabel);
             tasksList.appendChild(newTask);
-
             addTaskModal.classList.remove("is-active");
         }
 
@@ -573,9 +573,29 @@ var loadTasks = function () {
         var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
         var tasksList = document.getElementById("tasks-list");
         var completedTasksPane = document.getElementById("completed-tasks");
-        addTaskMax = JSON.parse(localStorage.getItem("addTaskMax")) ?? 3;
+        var dateHeading = document.querySelector("#tasks-list-container li ul");
+        var taskTitle = document.querySelector("#tasks-list-container li ul:nth-child(2)");
+        var dt = new Date().toLocaleString("en-us").split(",");
+        var day = new Date().toLocaleString("en-us", {weekday: "long"});
+        dt.length = 1;
+        addTaskMax = JSON.parse(localStorage.getItem("addTaskMax")) ?? 2;
         localStorage.setItem("addTaskMax", JSON.stringify(addTaskMax));
         completedTasks = JSON.parse(localStorage.getItem("completedTasks"));
+
+        var dtEl = document.createElement("li");
+        dtEl.textContent = dt;
+
+        var dayEl = document.createElement("li");
+        dayEl.setAttribute("style", "font-size: 1.5rem; color: #fff");
+        dayEl.textContent = day;
+        dateHeading.append(dayEl, dtEl);
+
+        var iconHolder = document.createElement("li");
+        var titleIcon = document.createElement("i");
+        titleIcon.classList.add("fa-solid");
+        titleIcon.classList.add("fa-calendar-day");
+        iconHolder.appendChild(titleIcon);
+        taskTitle.appendChild(iconHolder);
 
         if (storedTasks !== null) {
         for (var task = 0; task < storedTasks.length; task++) {
@@ -585,9 +605,10 @@ var loadTasks = function () {
 
             taskLabel.classList.add("checkbox");
             taskLabel.textContent = storedTasks[task];
+            taskLabel.setAttribute("style", "float: left");
             taskInput.setAttribute("type","checkbox");
-            taskLabel.appendChild(taskInput);
-            newTask.appendChild(taskLabel);
+            taskInput.setAttribute("style", "float: right");
+            newTask.append(taskInput, taskLabel);
             tasksList.appendChild(newTask);
         }
 
@@ -631,7 +652,8 @@ var moveTasksToComplete = function () {
         if (checkedOffTasks[task].checked === true) {
             var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
             var taskText = document.createElement("p");
-            var taskLabel = checkedOffTasks[task].parentNode;
+            var taskLabel = checkedOffTasks[task].nextElementSibling;
+
             for (var stored = 0; stored < storedTasks.length; stored++) {
                 if (storedTasks[stored] == taskLabel.textContent) {
                     const taskIndex = storedTasks.indexOf(storedTasks[stored]);
