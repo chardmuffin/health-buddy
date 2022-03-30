@@ -21,11 +21,21 @@
 }
 
 /* NAV BAR */
+
 nav {
     display: flex;
 }
+
 nav h3 {
     padding: 8px;
+}
+
+nav h5 {
+    align-self: flex-end;
+}
+
+.subtitle:not(:last-child) {
+    margin-bottom: 0;
 }
 
 /* HAMBURGER MENU */
@@ -135,36 +145,7 @@ footer section {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
 }
 
-/* COLORS */
-*,
-p,
-.label,
-.title,
-.modal-card-title {
-    color: var(--dark)
-}
-
-.content-card i {
-    color: red;
-}
-
-body,
-.modal-card-body {
-    background-color: var(--primary);
-}
-
-.menu-box,
-.modal-card-head,
-nav {
-    background-color: var(--secondary);
-}
-
-footer,
-.modal-card-foot {
-    width: 100%;
-    background-color: var(--tertiary);
-}
-
+/* TASKS */
 #tasks-list, #completed-tasks {
     /* adds background color to add task field */
 }
@@ -188,4 +169,43 @@ footer,
     margin-right: 10px;
     font-weight: 600;
     font-size: 0.7rem;
+}
+
+
+
+
+
+
+
+/* COLORS */
+*,
+p,
+.label,
+.title,
+.subtitle
+.modal-card-title,
+.checkbox:hover {
+    color: var(--dark)
+}
+
+.content-card i {
+    color: red;
+}
+
+body,
+html,
+.modal-card-body {
+    background-color: var(--primary);
+}
+
+.menu-box,
+.modal-card-head,
+nav {
+    background-color: var(--secondary);
+}
+
+footer,
+.modal-card-foot {
+    width: 100%;
+    background-color: var(--tertiary);
 }
