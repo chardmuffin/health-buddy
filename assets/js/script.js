@@ -309,7 +309,7 @@ var setContent = async function(type) {
     });
 }
 
-// TODO
+// TODO: add meme handling
 // returns a div with class="content-card" that holds content
 var generateContent = function(content) {
     var aContent = document.createElement("div");
@@ -327,6 +327,7 @@ var generateContent = function(content) {
     theHeartContainer.className = "column";
     var theHeart = document.createElement("i");
 
+    //if favorited, solid heart, else empty heart
     if (favorites.includes(content)) {
         theHeart.className = "fa-solid fa-heart";
     }
@@ -339,6 +340,7 @@ var generateContent = function(content) {
         // TODO: Future Development: handle displaying a meme
     }
     else {
+        //remove author if dadjoke or advice
         if (content.type === "dadjoke" || content.type === "advice") {
             theAuthor.textContent = "";
         }
@@ -364,6 +366,9 @@ var displayContent = async function() {
     document.getElementById("content-container").innerHTML = "";
 
     document.getElementById("content-container").appendChild(generateContent(currentContent));
+
+    //get the footer down
+    getDownFooterComeOnGetDown();
 }
 
 // saves content to favorites
@@ -392,7 +397,6 @@ var showFavorites = function() {
     favoritesModalEl.addEventListener("click", favoritesClickHandler);
 }
 
-// TODO see below
 // handles the favorites modal clicks
 var favoritesClickHandler = function(event) {
 
@@ -450,7 +454,6 @@ var favoritesClickHandler = function(event) {
         favoritesModalEl.classList.remove("is-active");
     }
     
-    //TODO
     else if (event.target.classList.contains("fa-heart")) {
 
         if (event.target.classList.contains("fa-regular")) {
@@ -503,11 +506,11 @@ var testColors = function() {
     document.documentElement.style.setProperty("--dark", document.getElementById("fonts").value);
 }
 
+// puts the user's name in the nav bar
 var loadNavBar = function() {
     if (user) {
         document.getElementById("user-name").textContent = user;
     }
-    
 }
 
 // utility function to generate a random numeric value between min and max, inclusive
@@ -516,7 +519,7 @@ var randomNumber = function(min, max) {
 };
 
 // shows add-task modal when add-task button is clicked to have the user create a new task
-var addTaskButtonHandler = function (event) {
+var addTaskButtonHandler = function () {
     addTaskMax = JSON.parse(localStorage.getItem("addTaskMax"));
     var tasksList = document.getElementById("tasks-list");
     if (addTaskMax == tasksList.children.length || addTaskMax === 10 && addTaskMax == tasksList.children.length) {
@@ -528,17 +531,20 @@ var addTaskButtonHandler = function (event) {
     addTaskModal.classList.add("is-active");
     var addTaskField = document.getElementById("add-task-field"); //textarea box
     var saveChangesBtn = document.getElementById("save-added-task");
-    
 
     //cancels out of add-tasks modal 
     addTaskModal.onclick = function(event) {
         var clickedElement = event.target;
-        if(clickedElement.classList.contains("is-danger")) {
+        if(clickedElement.classList.contains("is-danger") || clickedElement.classList.contains("modal-background")) {
             addTaskModal.classList.remove("is-active");
+
+            //remove any unsaved task from textarea
+            addTaskField.value = "";
         } 
     }
+
     //save changes that will update the tasklists
-    saveChangesBtn.onclick = function () {
+    saveChangesBtn.onclick = function () { 
 
         if (addTaskField.value !== "") {
             var newTask = document.createElement("li");
@@ -564,42 +570,44 @@ var addTaskButtonHandler = function (event) {
             newTask.append(taskInput, taskLabel);
             tasksList.appendChild(newTask);
             addTaskModal.classList.remove("is-active");
+
+            getDownFooterComeOnGetDown();
         }
 
-        addTaskField.setAttribute("placeholder", "Input a peaceful task"); 
+        addTaskField.setAttribute("placeholder", "Add a peaceful task :)"); 
     } 
 }
 
 // loads tasks the user previously created to continue where they left off
 var loadTasks = function () {
-        var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
-        var tasksList = document.getElementById("tasks-list");
-        var completedTasksPane = document.getElementById("completed-tasks");
-        var dateHeading = document.querySelector("#tasks-list-container li ul");
-        var taskTitle = document.querySelector("#tasks-list-container li ul:nth-child(2)");
-        var dt = new Date().toLocaleString("en-us").split(",");
-        var day = new Date().toLocaleString("en-us", {weekday: "long"});
-        dt.length = 1;
-        addTaskMax = JSON.parse(localStorage.getItem("addTaskMax")) ?? 2;
-        localStorage.setItem("addTaskMax", JSON.stringify(addTaskMax));
-        completedTasks = JSON.parse(localStorage.getItem("completedTasks"));
+    var storedTasks = JSON.parse(localStorage.getItem("storedTasks"));
+    var tasksList = document.getElementById("tasks-list");
+    var completedTasksPane = document.getElementById("completed-tasks");
+    var dateHeading = document.querySelector("#tasks-list-container li ul");
+    var taskTitle = document.querySelector("#tasks-list-container li ul:nth-child(2)");
+    var dt = new Date().toLocaleString("en-us").split(",");
+    var day = new Date().toLocaleString("en-us", {weekday: "long"});
+    dt.length = 1;
+    addTaskMax = JSON.parse(localStorage.getItem("addTaskMax")) ?? 2;
+    localStorage.setItem("addTaskMax", JSON.stringify(addTaskMax));
+    completedTasks = JSON.parse(localStorage.getItem("completedTasks"));
 
-        var dtEl = document.createElement("li");
-        dtEl.textContent = dt;
+    var dtEl = document.createElement("li");
+    dtEl.textContent = dt;
 
-        var dayEl = document.createElement("li");
-        dayEl.setAttribute("style", "font-size: 1.5rem; color: #fff");
-        dayEl.textContent = day;
-        dateHeading.append(dayEl, dtEl);
+    var dayEl = document.createElement("li");
+    dayEl.setAttribute("style", "font-size: 1.5rem; color: #fff");
+    dayEl.textContent = day;
+    dateHeading.append(dayEl, dtEl);
 
-        var iconHolder = document.createElement("li");
-        var titleIcon = document.createElement("i");
-        titleIcon.classList.add("fa-solid");
-        titleIcon.classList.add("fa-calendar-day");
-        iconHolder.appendChild(titleIcon);
-        taskTitle.appendChild(iconHolder);
+    var iconHolder = document.createElement("li");
+    var titleIcon = document.createElement("i");
+    titleIcon.classList.add("fa-solid");
+    titleIcon.classList.add("fa-calendar-day");
+    iconHolder.appendChild(titleIcon);
+    taskTitle.appendChild(iconHolder);
 
-        if (storedTasks !== null) {
+    if (storedTasks !== null) {
         for (var task = 0; task < storedTasks.length; task++) {
             var newTask = document.createElement("li");
             var taskLabel = document.createElement("label");
@@ -614,7 +622,7 @@ var loadTasks = function () {
             tasksList.appendChild(newTask);
         }
 
-        if(completedTasks !== null) {
+        if (completedTasks !== null) {
             for (var task = 0; task < completedTasks.length; task++) {
                 var taskText = document.createElement("p");
                 taskText.textContent = completedTasks[task];
@@ -622,6 +630,8 @@ var loadTasks = function () {
             }
         }
     }
+
+    getDownFooterComeOnGetDown();
 }
 
 //mark tasks as complete to move them to the completed tasks pane
@@ -673,7 +683,8 @@ var moveTasksToComplete = function () {
             completeTaskBtn.style.display = "none";
         }
     }
-    }
+}
+
 // switches tasks panes, which will allow either current tasks or completed tasks to appear
 var switchTasksPane = function (event) {
         var taskPane = event.target;
@@ -695,6 +706,7 @@ var switchTasksPane = function (event) {
             completedTasksPane.style.display = "flex";
         }
 }
+
 // popup message when users try to create another task beyond the current task limit
 var taskMaxMessage = function () {
     var maxMessageContainer = document.getElementById("task-max-message");
@@ -706,6 +718,15 @@ var taskMaxMessage = function () {
     cancelButton.addEventListener("click", function () {
         maxMessageContainer.style.display = "none";
     })
+}
+
+// function is called when the task list and completed lists are rendered in order to create enough space for the footer
+// prevents elements overlapping
+var getDownFooterComeOnGetDown = function() {
+    var footerHeight = $("#footer").height();
+    console.log(footerHeight)
+
+    $("#spacer").height(footerHeight + 40);
 }
 
 // call initial functions

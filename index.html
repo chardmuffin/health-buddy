@@ -146,7 +146,7 @@
     </div>
 
     <!-- favorites modal -->
-    <div class="modal" id="favorites-modal">
+    <div class="modal container is-fluid" id="favorites-modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
@@ -167,9 +167,6 @@
         <h3 class="title is-3" id="user-name">
             <!-- name goes here via script.js -->
         </h3>
-        <h5 class="subtitle is-5 is-pulled-right">
-            Mental Health Buddy
-        </h5>
         <div class="hamburger-menu">
             <input id="menu-toggle" type="checkbox" />
             <label class="menu-btn" for="menu-toggle">
@@ -199,30 +196,30 @@
             -->
         </div>
     </header>
-  
-    <div class="section is-large" id="task-card">
-        <div class="is-flex is-justify-content-center" id="task-header">
-            <h2 class="title is-4">Self-care Tasks</h2>
-            <button class="button is-primary ml-5" id="add-new-task">+</button>
-        </div>
 
-        <div class="modal container is-fluid" id="add-task-modal">
-            <div class="modal-background is-flex is-justify-content-center is-align-content-center">
-                <div class="modal-card py-4 px-4">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Peaceful Todos</p>
-                        <button class="delete button is-danger" aria-label="close">x</button>
-                    </header>
-                    <section class="modal-card-body">
-                        <textarea class="textarea" placeholder="Add tasks field" id="add-task-field"></textarea>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button class="button is-success" id="save-added-task">Save changes</button>
-                        <button class="button is-danger">Cancel</button>
-                    </footer>
-                </div>
-            </div>
-            <button class="modal-close" aria-label="close">This is content</button>
+    <!-- ADD TASK MODAL -->
+    <div class="modal container is-fluid" id="add-task-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Peaceful Todos</p>
+                <button class="delete button is-danger" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <textarea class="textarea" rows="3" placeholder="Add a peaceful task :)" id="add-task-field"></textarea>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="save-added-task">Save</button>
+                <button class="button is-danger">Cancel</button>
+            </footer>
+        </div>
+    </div>
+  
+    <!-- TASKS  -->
+    <div class="section" id="task-card">
+        <div class="is-flex is-justify-content-center" id="task-header">
+            <h2 class="title is-4">Self-Care Tasks</h2>
+            <button class="button is-primary ml-5" id="add-new-task">+</button>
         </div>
 
         <div class="tabs is-toggle is-flex-direction-column" id="tasks-container">
@@ -272,7 +269,7 @@
                     * https://bulma.io/documentation/components/tabs/
                     * nice to have: if task accidentally completed, go to completed tab and send it back to the other tab
                 -->
-            <button class="button is-small is-align-self-flex-end" id="completed-task-btn">Mark Complete</button>
+            <button class="button is-primary is-align-self-flex-end" id="completed-task-btn">Mark Complete</button>
         </div>
         
     </div>
@@ -290,8 +287,14 @@
             <br />
             <span class="is-align-self-flex-end"></span>
         </div>
-      </article>
-    <footer>
+    </article>
+
+    <div class="block" id="spacer">
+        <!-- use this to create enough space between footer and bottom of the tasks lists-->
+    </div>
+
+    <!-- footer -->
+    <footer id="footer">
         <section id="content-container">
             <!-- script.js loads content here like:
                 <div class = "columns is-mobile content-card">
