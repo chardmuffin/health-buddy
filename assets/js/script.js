@@ -6,6 +6,7 @@ var favorites = []; // push a currentContent here if user selects it as a favori
 var colors = [];
 var preferencesModalEl = document.getElementById("settings-modal");
 var preferencesModalHeaderTextEl = document.querySelector(".modal-card-title");
+var aboutModalEl = document.getElementById("about-modal");
 var favoritesModalEl = document.getElementById("favorites-modal");
 var favoritesBodyEl = document.getElementById("favorites-body");
 var savedTasks = []; //array to hold existing tasks previously saved
@@ -106,9 +107,9 @@ var preferencesClickHandler = function(event) {
 // TODO:
 // this function is called when the "about" menu item is tapped
 var showAbout = function() {
+    aboutModalEl.classList.add("is-active")
 
-    window.open("https://github.com/chardmuffin/mental-health-buddy", '_blank');
-
+    aboutModalEl.addEventListener("click",aboutModalClickHandler)
     // list sources for the quotes
     // (zen quotes requires this to be somewhere in the app:)
     // Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
@@ -118,6 +119,14 @@ var showAbout = function() {
 
     // nice to have:
     // suggestions?/feedback? link
+}
+
+var aboutModalClickHandler = function(event) {
+     // if clicked cancel, exit buttons, or the background:
+     if (event.target.classList.contains("delete") || event.target.classList.contains("modal-background")) {
+
+        aboutModalEl.classList.remove("is-active");
+    }
 }
 
 // TODO: maybe: finish this
