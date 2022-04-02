@@ -5,40 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- TODO:
-
-        link css framework here
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
     
-        <link rel="stylesheet" href="#">
-    -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    />
+
+    <script src="https://kit.fontawesome.com/23e85c6c8b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Mental Health Buddy</title>
 </head>
 <body>
-   
-    <div class="nav-container">
-        <nav class="navbar">
-            <h1 id="navbar-logo">Mental Health Buddy</h1>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-links">Home</a></li>
-                <li><a href="#" class="nav-links">Settings</a></li>
-                <li><a href="#" class="nav-links">About Us</a></li>
-            </ul>
-        </nav>
 
-    </div>
+
 
     
 
     <nav id="nav-bar">
-        <h3 id="user-name">
-            Name
+        <h3 class="title is-3" id="user-name">
+            <!-- name goes here via script.js -->
         </h3>
         <div class="hamburger-menu">
             <input id="menu-toggle" type="checkbox" />
@@ -47,6 +41,8 @@
             </label>
         
             <ul class="menu-box">
+                <li class="menu-item" id="favorites">Favorites</li>
+                <li id="space"> </li>
                 <li class="menu-item" id="settings">Settings</li>
                 <li class="menu-item" id="about">About</li>
             </ul>
@@ -57,62 +53,69 @@
         <div id="welcome-message-container">
             <!--
                 TODO
-                use jquery to add icon/image here e.g. <i></i>
+                use jquery to add icon/image here
             -->
         </div>
         <div id="icon-container">
             <!--
                 TODO
-                use jquery to add icon/image here e.g. <i></i>
+                use jquery to add icon/image here
             -->
         </div>
     </header>
-
-    <div id="reminders-card">
-        <div id="reminder-header">
-            <h2>Don't Forget...</h2>
-            <button id="add-reminder-button">
-                <!--
-                    TODO
-                    float right
-                    button press should trigger a function in javascript:
-                    addReminderButtonHandler()
-                -->
-            </button>
-        </div>
-
-        <div id="reminders-container">
-            <!--
-                TODO
-                * use javascript to generate reminders from localstorage
-                * include an h3 for name of reminder,
-                * on/off slider?
-                * edit button?
-                * delete button?
-                
-                nice to have:
-                * frequency
-                * description
-                * send me a quote/meme at random times
-            -->
-        </div>
-    </div>
   
     <div id="task-card">
-        <div id="task-header">
-            <h2>Tasks...</h2>
-            <button id="add-task-button">
-                <!--
-                    TODO
-                    float right
-                    button press should trigger a function in javascript:
-                    addTaskButtonHandler()
-                -->
-            </button>
+        <div class="is-flex is-justify-content-center" id="task-header">
+            <h2 class="title is-4">Self-care Tasks</h2>
+            <button class="button is-primary ml-5" id="add-new-task">+</button>
         </div>
 
-        <div id="tasks-container">
-            <ul id="tasks-list">
+        <div class="modal container is-fluid" id="add-task-modal">
+            <div class="modal-background is-flex is-justify-content-center is-align-content-center">
+                <div class="modal-card has-background-white py-4 px-4">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Peaceful Todos</p>
+                        <button class="delete button is-danger" aria-label="close">x</button>
+                    </header>
+                    <section class="modal-card-body">
+                        <textarea class="textarea" placeholder="Add tasks field" id="add-task-field"></textarea>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-success" id="save-added-task">Save changes</button>
+                        <button class="button is-danger">Cancel</button>
+                    </footer>
+                </div>
+            </div>
+            <button class="modal-close" aria-label="close">This is content</button>
+        </div>
+
+        <div class="tabs is-toggle is-flex-direction-column" id="tasks-container">
+            <ul class="is-justify-content-center" id="tasks-pane">
+                <li class="is-active" id="current-tasks-pane">
+                    <a>
+                        <span class="icon is-small"><i class="fa-solid fa-seedling"></i></span>
+                        <span>Current Tasks</span>
+                      </a>
+                </li>
+                <li id="completed-tasks-pane">
+                    <a>
+                        <span class="icon is-small"><i class="fas fa-tree" aria-hidden="true"></i></span>
+                        <span>Completed Tasks</span>
+                      </a>
+                </li>  
+            </ul>
+            <ul class="is-flex-direction-column" id="tasks-list">
+                <!-- tasks content appears here -->
+            </ul>
+            <ul class="is-flex-direction-column" id="completed-tasks">
+                <!-- potential field for completed content -->
+                <li>
+                    This is example text. Completed tasks will be...
+                </li>
+                <li>
+                    ...saved here
+                </li>
+            </ul>
                 <!--
                     TODO
                     * use javascript to generate tasks from localstorage 
@@ -120,30 +123,32 @@
                     * include a checkbox
                         if checkbox is checked,
                             fireworks display
-                            remove task from list
+                            remove the task from list
+
+                    * maybe: send completed tasks to a "complete section"
+                    * could use bulma tabs for a "complete" tab:
+                    * https://bulma.io/documentation/components/tabs/
+                    * nice to have: if task accidentally completed, go to completed tab and send it back to the other tab
                 -->
-            </ul>
+            <button class="button is-small is-success is-align-self-flex-end" id="completed-task-btn">Mark Complete</button>
         </div>
+        
     </div>
 
     <footer>
-        <div id="quote-container">
-            <blockquote id="quotation">
-                <!--
-                    TODO
-                    use javascript to fetch quote from the API requested by user
-                    (e.g. inspirational, zen, kanye, meme, etc.)
-                    * centered
-                -->
-            </blockquote>
-            <div id="wise-person">
-                <!--
-                    TODO
-                    use javascript to fetch the name of the person quoted above
-                    * italics
-                -->
-            </div>
-        </div>
+        <section id="content-container">
+            <!-- script.js loads content here like:
+                <div class = "columns is-mobile content-card">
+                    <div class = "column is-10">
+                        <div>CONTENT GOES HERE</div>
+                        <div>AUTHOR</div>
+                    </div>
+                    <div class = "column">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                </div>
+            -->
+        </section>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
