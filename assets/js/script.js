@@ -106,8 +106,9 @@ var preferencesClickHandler = function(event) {
 // TODO:
 // this function is called when the "about" menu item is tapped
 var showAbout = function() {
+    var aboutModalEl = document.getElementById("about-modal");
+    aboutModalEl.classList.add("is-active")
 
-    window.open("https://github.com/chardmuffin/mental-health-buddy", '_blank');
 
     // list sources for the quotes
     // (zen quotes requires this to be somewhere in the app:)
