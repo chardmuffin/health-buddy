@@ -20,13 +20,23 @@ WHEN I scroll down my home page
 THEN I see a random inspirational quote in the footer generated from a quotes API
 ```
 
-Possible APIS:
+APIS Used:
 * AdviceSlip - generate random pieces of advice - https://api.adviceslip.com/
-* Forismatic - generate random inspirational quotes - http://forismatic.com/en/api/
-* Stoicism quotes - quotes about stoicism - https://github.com/tlcheah2/stoic-quote-lambda-public-api
+* Dad Jokes - generate random dad jokes - https://icanhazdadjoke.com/api
 * Zen Quotes - generates zen/philosophy quotes - https://zenquotes.io/
+* Stoicism quotes - quotes about stoicism - https://github.com/tlcheah2/stoic-quote-lambda-public-api
+* Kanye Quotes - generates Kanye quotes - https://kanye.rest/
+
+![mental-health-buddy-screenshot](./assets/images/mental-health-buddy-screenshot.png)
+
+# Technologies Used
+* HTML
+* CSS & Bulma (CSS Framework)
+* JavaScript/Jquery 
+* Apis
+
 
 
 # Resources
-
 * Hamburger Menu inspiration from #6 in: https://alvarotrigo.com/blog/hamburger-menu-css/
+* Font Awesome is used for user-friendly icons: https://fontawesome.com/

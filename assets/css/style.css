@@ -8,6 +8,10 @@
     height: 100%;                   /* should prevent zoom on mobile */
 }
 
+body {
+    min-height: 100vh;
+}
+
 /* TODO:
     Nice to have: user can select font in settings*/
 * {
@@ -18,16 +22,12 @@
 }
 
 /* NAV BAR */
+nav {
+    display: flex;
+}
+
 nav h3 {
     padding: 8px;
-}
-
-nav h5 {
-    align-self: flex-end;
-}
-
-.subtitle:not(:last-child) {
-    margin-bottom: 0;
 }
 
 /* HAMBURGER MENU */
@@ -119,14 +119,34 @@ nav h5 {
 
 /* FOOTER */
 footer {
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    width: 100%;
+    border-top: 5px solid var(--secondary);
 }
 
 footer section {
     padding-bottom: 2%;
     font-size: 20px;
     font-weight: 600;
+}
+
+footer section:first-child {
+    border: 6px double var(--secondary);
+}
+
+#content-container {
+    margin: 10px;
+}
+
+/* Favorites Modal */
+#favorites-body {
+    padding: 0;
+}
+#favorites-body .columns:not(:last-child) {
+    border-bottom: 1px solid var(--dark);
 }
 
 /* CONTENT CARD */
@@ -141,9 +161,7 @@ footer section {
 #completed-tasks {
     display: none;
     background-color: white;
-    max-height: 50vh;
-    overflow: hidden;
-    overflow-y: scroll;
+    height: 100%;
     box-shadow: 0 0 12px 4px rgba(143, 110, 215, 0.2);
     margin: 0 15px 15px 15px;
 }
@@ -171,14 +189,12 @@ footer section {
 
 #tasks-list-container > li:nth-child(2) {
     width: 100%;
-    overflow: hidden;
-    overflow-y: scroll;
-    max-height: 50vh;
+    height: 100%;
 }
 
 #tasks-list {
     width: 100%;
-    max-height: 50vh;
+    height: 100%;
 }
 
 #tasks-list > li, #completed-tasks > p {
@@ -187,19 +203,14 @@ footer section {
     margin: 5px 0;
     padding: 10px 0;
     border-bottom: 1px solid rgb(109, 211, 214);
+    white-space: normal;
+    color: black;
 }
 
 #tasks-list > li *, #completed-tasks > li * {
-    color: gray;
     margin: 0 5px;
-}
-
-#tasks-list ul li label {
-    float: right;
-}
-
-#tasks-list ul li label input {
-    float: left;
+    white-space: normal;
+    color: black;
 }
 
 #completed-task-btn {
@@ -234,16 +245,12 @@ footer section {
     padding: 20px 1.5rem;
 }
 
-
-
-
-
 /* COLORS */
 *,
 p,
 .label,
 .title,
-.subtitle
+.subtitle,
 .modal-card-title,
 .checkbox:hover {
     color: var(--dark)
@@ -276,3 +283,15 @@ footer,
     color: #00947e;
 }
 
+/* smaller font in footer if using mobile */
+@media screen and (max-width: 575px) {
+    
+    footer section {
+        font-size: 16px;
+    }
+
+    .section {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
