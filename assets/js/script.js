@@ -522,6 +522,16 @@ var loadNavBar = function() {
     }
 }
 
+var generateHero = function() {
+    console.log()
+    var welcomeIcon = $('<img>');
+    var iconContainerEl = $('#icon-container')
+    welcomeIcon.attr('src', './assets/images/good-morning-transparent.png')
+
+
+    iconContainerEl.append(welcomeIcon)
+}
+
 // utility function to generate a random numeric value between min and max, inclusive
 var randomNumber = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -742,6 +752,8 @@ var getDownFooterComeOnGetDown = function() {
 $(document).ready(getLocalStorage);
 $(document).ready(firstTime);
 $(document).ready(loadNavBar);
+$(document).ready(generateHero);
+
 
 // Listeners
 document.getElementById("settings").addEventListener("click", showSettings);
