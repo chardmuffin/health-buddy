@@ -522,13 +522,14 @@ var loadNavBar = function() {
     }
 }
 
+// this function sets the Hero icon based on time of day
 var generateHero = function() {
     var welcomeIcon = $('<img>');
     var iconContainerEl = $('#icon-container')
     var currentHour = new Date().getHours()
     
+    // Clears the old icon 
     iconContainerEl.empty()
-    console.log('hello')
 
     if (currentHour >= 4  && currentHour < 12) {
         welcomeIcon.attr('src', './assets/images/good-morning-transparent.png')
@@ -539,7 +540,6 @@ var generateHero = function() {
     else {
         welcomeIcon.attr('src', './assets/images/good-evening-transparent.png')
     }
-
 
     iconContainerEl.append(welcomeIcon)
 }
@@ -766,10 +766,10 @@ $(document).ready(firstTime);
 $(document).ready(loadNavBar);
 $(document).ready(generateHero);
 
-// 
+// this function calls generateHero every 60 seconds incase the time of day changes while the app is open
 setInterval(function() {
     generateHero();
-}, 60*1000)
+}, 60 * 1000)
 
 
 // Listeners
