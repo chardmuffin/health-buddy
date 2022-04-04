@@ -522,6 +522,28 @@ var loadNavBar = function() {
     }
 }
 
+// this function sets the Hero icon based on time of day
+var generateHero = function() {
+    var welcomeIcon = $('<img>');
+    var iconContainerEl = $('#icon-container')
+    var currentHour = new Date().getHours()
+    
+    // Clears the old icon 
+    iconContainerEl.empty()
+
+    if (currentHour >= 4  && currentHour < 12) {
+        welcomeIcon.attr('src', './assets/images/good-morning-transparent.png')
+    }
+    else if (currentHour >= 12 && currentHour < 6) {
+        welcomeIcon.attr('src', './assets/image/good-afternoon-transparent.png')
+    }
+    else {
+        welcomeIcon.attr('src', './assets/images/good-evening-transparent.png')
+    }
+
+    iconContainerEl.append(welcomeIcon)
+}
+
 // utility function to generate a random numeric value between min and max, inclusive
 var randomNumber = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -742,6 +764,13 @@ var getDownFooterComeOnGetDown = function() {
 $(document).ready(getLocalStorage);
 $(document).ready(firstTime);
 $(document).ready(loadNavBar);
+$(document).ready(generateHero);
+
+// this function calls generateHero every 60 seconds incase the time of day changes while the app is open
+setInterval(function() {
+    generateHero();
+}, 60 * 1000)
+
 
 // Listeners
 document.getElementById("settings").addEventListener("click", showSettings);

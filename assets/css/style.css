@@ -18,7 +18,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 /* NAV BAR */
@@ -115,6 +115,21 @@ nav h3 {
     border-bottom: 2px solid var(--dark);
     width: 85%;
     margin: 5% auto;
+}
+
+#welcome-message-container {
+    text-align: center;
+
+}
+
+#icon-container {
+    padding-top: 20px;
+    text-align: center;
+    
+}
+
+#icon-container img{
+    width: 50%;
 }
 
 /* FOOTER */
