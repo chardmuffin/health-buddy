@@ -52,3 +52,6 @@ will increase your maximum allowed number of outstanding tasks, up to 10.
 ## Resources
 * Hamburger Menu inspiration from #6 in: https://alvarotrigo.com/blog/hamburger-menu-css/
 * Font Awesome is used for user-friendly icons: https://fontawesome.com/
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
