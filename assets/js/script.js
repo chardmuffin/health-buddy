@@ -534,7 +534,7 @@ var generateHero = function() {
     if (currentHour >= 4  && currentHour < 12) {
         welcomeIcon.attr('src', './assets/images/good-morning-transparent.png')
     }
-    else if (currentHour >= 12 && currentHour < 6) {
+    else if (currentHour >= 12 && currentHour < 18) {
         welcomeIcon.attr('src', './assets/image/good-afternoon-transparent.png')
     }
     else {
