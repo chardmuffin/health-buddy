@@ -140,6 +140,7 @@ footer {
     right:0;
     width: 100%;
     border-top: 5px solid var(--secondary);
+    z-index: 4;
 }
 
 footer section {
