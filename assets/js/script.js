@@ -53,12 +53,6 @@ var showSettings = function() {
     else {
         document.getElementById("zen-checkbox").checked = false;
     }
-    if (contentTypes.includes("kanye")) {
-        document.getElementById("kanye-checkbox").checked = true;
-    }
-    else {
-        document.getElementById("kanye-checkbox").checked = false;
-    }
     /*if (contentTypes.includes("meme")) {
         document.getElementById("meme-checkbox").checked = true;
     }
@@ -163,7 +157,6 @@ var updatePreferences = async function(event) {
     var hasDadJokes = document.getElementById("dadjoke-checkbox").checked;
     var hasStoicism = document.getElementById("stoicism-checkbox").checked;
     var hasZen = document.getElementById("zen-checkbox").checked;
-    var hasKanye = document.getElementById("kanye-checkbox").checked;
     //var hasMeme = document.getElementById("meme-checkbox").checked;
     var hasFavorites = document.getElementById("favorites-checkbox").checked;
 
@@ -176,7 +169,7 @@ var updatePreferences = async function(event) {
     }
 
     // is at least one checkbox selected?
-    if (!(hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye /*|| hasMeme*/ || hasFavorites)) {
+    if (!(hasAdviceSlips || hasDadJokes || hasStoicism || hasZen /*|| hasMeme*/ || hasFavorites)) {
         document.getElementById("checkbox-danger").textContent = "Please select at least one item";
     }
     else {
@@ -184,7 +177,7 @@ var updatePreferences = async function(event) {
     }
 
     // if name is entered and at least one checkbox selected, save settings and close modal
-    if (user && (hasAdviceSlips || hasDadJokes || hasStoicism || hasZen || hasKanye /*|| hasMeme*/ || hasFavorites)) {
+    if (user && (hasAdviceSlips || hasDadJokes || hasStoicism || hasZen /*|| hasMeme*/ || hasFavorites)) {
 
         contentTypes = [];
         if (hasAdviceSlips) {
@@ -198,9 +191,6 @@ var updatePreferences = async function(event) {
         }
         if (hasZen) {
             contentTypes.push("zen");
-        }
-        if (hasKanye) {
-            contentTypes.push("kanye");
         }
         /*if (hasMeme) {
             contentTypes.push("meme");
@@ -233,7 +223,7 @@ var updatePreferences = async function(event) {
 // for memes, probably store url in "quote" and caption in "author"
 //
 // this function updates currentContent to content of type "type"
-// where type = "kanye", "stoicism", "zen", "dadjoke", "advice":
+// where type = "stoicism", "zen", "dadjoke", "advice":
 //  {
 //      author: "author name",
 //      quote: "this is the content"
@@ -248,9 +238,6 @@ var setContent = async function(type) {
         // select a random quote from list of favorites
         currentContent = favorites[randomNumber(0, favorites.length - 1)]
         return;
-    }
-    else if (type === "kanye") {
-        url = "https://api.kanye.rest";
     }
     else if (type === "stoicism") {
         url = "https://noahs-server-proj1.herokuapp.com/https://api.themotivate365.com/stoic-quote";
@@ -276,11 +263,7 @@ var setContent = async function(type) {
     })
     .then(data => {
         //console.log(data)
-        if (type === "kanye") {
-            currentContent.author = " - Ye West";
-            currentContent.quote = '"' + data.quote + '"';
-        }
-        else if (type === "stoicism") {
+        if (type === "stoicism") {
             // if the quote is from twitter, move the @ symbol from end of quote to front of the author's twitter username
             if (data.data.quote.slice(-1) === "@") {
                 currentContent.author = " - @" + data.data.author;
@@ -377,7 +360,7 @@ var displayContent = async function() {
     document.getElementById("content-container").appendChild(generateContent(currentContent));
 
     //get the footer down
-    getDownFooterComeOnGetDown();
+    anchorFooterToBottom();
 }
 
 // saves content to favorites
@@ -602,7 +585,7 @@ var addTaskButtonHandler = function () {
             tasksList.appendChild(newTask);
             addTaskModal.classList.remove("is-active");
 
-            getDownFooterComeOnGetDown();
+            anchorFooterToBottom();
         }
 
         addTaskField.setAttribute("placeholder", "Add a peaceful task :)"); 
@@ -662,7 +645,7 @@ var loadTasks = function () {
         }
     }
 
-    getDownFooterComeOnGetDown();
+    anchorFooterToBottom();
 }
 
 //mark tasks as complete to move them to the completed tasks pane
@@ -753,7 +736,7 @@ var taskMaxMessage = function () {
 
 // function is called when the task list and completed lists are rendered in order to create enough space for the footer
 // prevents elements overlapping
-var getDownFooterComeOnGetDown = function() {
+var anchorFooterToBottom = function() {
     var footerHeight = $("#footer").height();
     console.log(footerHeight)
 
