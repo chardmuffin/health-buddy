@@ -240,10 +240,10 @@ var setContent = async function(type) {
         return;
     }
     else if (type === "stoicism") {
-        url = "https://noahs-server-proj1.herokuapp.com/https://api.themotivate365.com/stoic-quote";
+        url = "https://cors-anywhere.herokuapp.com/https://api.themotivate365.com/stoic-quote";
     }
     else if (type === "zen") {
-        url = "https://noahs-server-proj1.herokuapp.com/https://zenquotes.io/api/random";
+        url = "https://cors-anywhere.herokuapp.com/https://zenquotes.io/api/random";
     }
     else if (type === "dadjoke") {
         url = "https://icanhazdadjoke.com/";
@@ -262,16 +262,16 @@ var setContent = async function(type) {
         }
     })
     .then(data => {
-        //console.log(data)
+        console.log(data)
         if (type === "stoicism") {
             // if the quote is from twitter, move the @ symbol from end of quote to front of the author's twitter username
-            if (data.data.quote.slice(-1) === "@") {
-                currentContent.author = " - @" + data.data.author;
-                currentContent.quote = '"' + data.data.quote.slice(0, -1) + '"';
+            if (data.quote.slice(-1) === "@") {
+                currentContent.author = " - @" + data.author;
+                currentContent.quote = '"' + data.quote.slice(0, -1) + '"';
             }
             else {
-                currentContent.author = " - " + data.data.author;
-                currentContent.quote = '"' + data.data.quote + '"';
+                currentContent.author = " - " + data.author;
+                currentContent.quote = '"' + data.quote + '"';
             }
         }
         else if (type === "zen") {

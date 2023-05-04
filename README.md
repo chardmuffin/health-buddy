@@ -5,7 +5,7 @@ Created By: Richard Huffman, Kaylan Prophet, Malik Spruill, Jordan Weston
 <br>
 
 Send yourself gentle mental health messages using Mental Health Buddy! 
-Choose the types of messages: advice slips, dad jokes, zen quotes, stoicism quotes. You will be greeted by a new message every time you open the app or refresh the page. Save your favorite messages to your personal favorites list by tapping the heart icon! 
+Choose the types of messages: advice slips, dad jokes, zen quotes, and stoicism quotes. You will be greeted by a new message every time you open the app or refresh the page. Save your favorite messages to your personal favorites list by tapping the heart icon! 
 
 Mental Health Buddy also helps you manage all your self-care needs throughout the day. Create a handy To-Do List to keeps track of the items on your plate and the ones you've completed.
 
